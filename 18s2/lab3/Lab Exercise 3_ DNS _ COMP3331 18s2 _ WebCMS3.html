@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="1533811768##bc5899a48a6c043786f87e46d6f4d9d169f3ad59">
+    <title>Lab Exercise 3: DNS |  COMP3331 18s2 | WebCMS3</title>
+
+    <link rel="icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" id="theme" href="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/lightblue.theme.44067b4b68fb1bc5f547f238785c61c1.css">
+
+
+  <style type="text/css"></style><style type="text/css">.select-box{position:absolute;border:1px solid #ddd;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);background:#fff;z-index:1000}.mention{text-decoration:none!important;color:#000!important;background-color:#dce6f8;padding:0;margin-right:.5em}.user-select{list-style-type:none;list-style:none;margin:0;padding:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}.user-select li{display:block;padding:5px 10px;font-weight:600;cursor:pointer;border-bottom:1px solid #ddd}.user-select li small{font-weight:400;color:#767676}.user-select .selected small{color:#fff}.user-select .selected{background-color:#4078c0;color:#fff}</style></head>
+  <body role="document" id="webcms3top">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://webcms3.cse.unsw.edu.au/">WebCMS3</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Computer Networks and Applications">COMP9331</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9313/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Big Data Management">COMP9313</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9319/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Web Data Compression and Search">COMP9319</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9418/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Advanced Topics In Statistical Machine Learning">COMP9418</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9900/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Information Technology Project">COMP9900</a></li>
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://webcms3.cse.unsw.edu.au/search" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Search Courses"><i class="fa fa-search"></i></a></li>
+              <li class="dropdown">
+                <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <div class="nav-profile-mask">
+                    <img class="profile_picture" src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png">
+                  </div>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858"><i class="fa fa-user"></i> Profile</a></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-sm-3 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar hidden-print">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h4 class="panel-title"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">COMP9331</a> <small>18s2</small></h4>
+    </div>
+
+  </div>
+
+  <ul class="list-group">
+            <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">Home</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/outline">Course Outline</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#side-menu3" data-toggle="collapse" data-parent=".sidebar">
+            Course Work <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse in" id="side-menu3">
+                  <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17194">Lectures</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17330">Echo 360 Lecture Recordings</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17329">Labs</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17289">Assignment</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17331">Mid-session Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17336">Final Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17360">Homework Questions</a>
+        </li>
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/">Forums</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/timetable">Timetable</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/groups/">Groups</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#side-menu7" data-toggle="collapse" data-parent=".sidebar">
+            Staff <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse" id="side-menu7">
+          
+
+                     <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a>
+    <span class="label label-primary">Course Admin</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3004991">Mahbub Hassan</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3116703">Salil Kanhere</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5042615">Luke Yuan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5036620">Weineng He</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3331774">Phuoc Tran</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5031977">Najmul Hassan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095709">Finbars Chuka Oham</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5088051">Phoebe Zhou</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5019176">Mathew Vo</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5129195">Yi Xiao</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059988">Costa Paraskevopoulos</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5109199">Marjan Moradi</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5130887">Sijun Zhu</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3202491">Sidra Malik</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5175209">Nipuna Shanthidewa</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059444">Weilon Ying</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/activities/">Activities</a>
+        </li>
+
+
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-footer">
+
+      <div class="pull-right"> 
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/users/grades" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Grades"><i class="fa fa-bar-chart"></i></a>
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/blogs/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Blog"><i class="fa fa-comment"></i></a>
+      </div>
+      Changfeng Li<br>
+      <small>Student</small>
+    </div>
+  </div>
+  
+</div>
+          </div>
+          <div class="col-sm-9 col-md-9 main">
+            <p class="visible-xs hidden-print">
+              <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i> Toggle Menu</button>
+            </p>
+<ol class="breadcrumb">
+  <li>Resources</li>
+
+  <li><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17340">Lab Exercises</a></li>
+
+  <li class="active">Lab Exercise 3: DNS</li>
+</ol>
+<div class="page-header with-breadcrumb">
+  <h1 style="display:inline;">Lab Exercise 3: DNS</h1> 
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+     <div class="clearfix">
+
+
+    </div>
+  
+    <br>
+
+
+
+             <h3>
+  <em>
+  </em>
+  <br>
+ </h3>
+ <table class="table">
+  <tbody>
+   <tr>
+    <td style="text-align: center;">
+     <b>
+      <span style="font-size: 20px;">
+       There are 7 labs during this course. For each student, the 5 best performing labs will contribute to your final lab mark.
+      </span>
+     </b>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <h3>
+  Objectives:
+ </h3>
+ <ul>
+  <li>
+   Gain insights into the operation of the DNS protocol
+  </li>
+  <li>
+   Dig deep into DNS server organisation
+  </li>
+  <li>
+   Get familiar with the socket programming
+  </li>
+ </ul>
+ <h3>
+  Prerequisites &amp; Links:
+ </h3>
+ <ul>
+  <li>
+   Week 2 &amp; 3 Lectures
+  </li>
+  <li>
+   Relevant Parts of Chapter 2 of the textbook
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17358" target="_blank">
+    Introduction to Tools of the Trade
+   </a>
+  </li>
+  <li>
+   Basic understanding of Linux. A good resource is
+   <a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">
+    here
+   </a>
+   but there are several other resources online.
+  </li>
+  <li>
+   Several socket programming resources and sample code for all 3 programming languages are available
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17240" target="_blank">
+    here
+   </a>
+   .
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17305" target="_blank">
+    dns-ethereal-trace-2
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/20132" target="_blank">
+    index.html
+   </a>
+  </li>
+ </ul>
+ <h3>
+  Marks:
+  <strong>
+   10 marks.
+  </strong>
+ </h3>
+ <ul>
+  <li>
+   <span rel="font-size: 14px;" style="font-size: 14px;">
+    This lab requires submission (5 Marks) as well as demonstration (5 Marks)
+   </span>
+  </li>
+  <li>
+   <span style="font-size: 14px;">
+    Please attend the lab in your allocated lab time slot
+   </span>
+  </li>
+  <li>
+   <span rel="font-size: 14px;" style="font-size: 14px;">
+    This lab comprises of a number of exercises. Pl note that not all the exercises for this lab are marked. You have to submit a report containing answers to selected exercises only (Exercises 3 &amp; 4)
+   </span>
+  </li>
+  <li>
+   <span style="font-size: 14px;">
+    We expect the students to go through as much of the lab exercises as they can at home and come to the lab for clarifying any doubts in procedure/specifications
+   </span>
+  </li>
+  <li>
+   <span rel="font-size: 14px;" style="font-size: 14px;">
+    Exercise 5 marked with (*) is to be demonstrated in the lab to the tutor for marking purpose
+   </span>
+  </li>
+  <li>
+   <span style="font-size: 14px;">
+    Please attend your allocated lab and show/explain the answers of the marked exercises to your tutor
+   </span>
+  </li>
+  <li>
+   <span rel="font-size: 14px;" style="font-size: 14px;">
+    If lab exercise involves diagrams or plots, you require to show them to the tutor as well
+   </span>
+  </li>
+  <li>
+   <span style="font-size: 14px;">
+    Please make sure you
+    <b>
+     sign the marking form
+    </b>
+    once the tutor marked your lab. Signing this form implies that you agreed on the mark you received
+   </span>
+  </li>
+ </ul>
+ <h3>
+  Deadline:
+ </h3>
+ <p>
+  <em>
+   Demonstration:
+  </em>
+  You need to attend the lab for demonstration of Exercise 4 on your allocated lab slot. Please note that there would not be any retake available if you miss your lab slot. This means you will be awarded ZERO for the demonstration component of the lab (5 marks).
+ </p>
+ <p>
+  <em>
+   Report Submission:
+  </em>
+  <em>
+   <strong>
+    Midnight Friday 17th August 2018
+   </strong>
+  </em>
+  . You can submit as many times as you wish before the deadline. A later submission will override the earlier submission, so make sure you submit the correct file. Do not leave until the last moment to submit, as there may be technical or communications error and you will not have time to rectify it.
+ </p>
+ <h3>
+  Late Report Submission Penalty:
+ </h3>
+ <p>
+  Late penalty will be applied as follows:
+ </p>
+ <ul>
+  <li>
+   1 day after deadline: 20% reduction
+  </li>
+  <li>
+   2 days after deadline: 40% reduction
+  </li>
+  <li>
+   3 days after deadline: 60% reduction
+  </li>
+  <li>
+   4 or more days late: NOT accepted
+  </li>
+ </ul>
+ <p>
+  Note that the above penalty is applied to your final mark for your lab report. For example, if you submit your lab work report 2 days late and your score on the lab report is 4, then your final mark will be 4 - 1.6 (40% penalty) = 2.4.
+ </p>
+ <h3>
+  Submission Instructions:
+  <br>
+ </h3>
+ <p>
+  Submit a PDF document
+  <strong>
+   Lab3.pdf
+  </strong>
+  with answers to Exercises 3 and 4. Include any supporting documents that you think are necessary. Your server should be named WebServer.c or WebServer.java or WebServer.py. Create a tar archive of all the files called
+  <strong>
+   Lab3.tar
+  </strong>
+  . Submit the archive using give. You can submit from a lab machine or ssh into the CSE login server. Instructions to ssh into CSE login servers are
+  <a href="https://taggi.cse.unsw.edu.au/FAQ/Logging_In_With_SSH/">
+   here
+  </a>
+  .
+ </p>
+ <p>
+  If you are using Python, then please add a comment at the top of your code to indicate the correct version of Python to use for testing.
+ </p>
+ <h3>
+  Original Work Only:
+ </h3>
+ <p>
+  You are strongly encouraged to discuss the questions with other students in your lab. However, each student must submit his or her own work. You may need to refer to the material indicated above (particularly Tools of the Trade document) and also conduct your own research to answer the questions.
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 20px;">
+    OS Compatibility:
+   </span>
+  </b>
+ </p>
+ <p>
+  We will test your code on CSE machines via the command line interface. Note that CSE machines support the following:
+  <b>
+   gcc version 4.9.2, Java 1.8, Python 2.7, 2.8 and 3.
+  </b>
+  It is thus imperative that you test your code on CSE machines before submitting. This is particularly important if you write your code on your own machine and use an IDE. You MUST test your code on CSE machines (via command line) before submitting. If we cannot get your code to work on CSE machines, then we can't mark it and unfortunately, you won't receive any marks.
+ </p>
+ <h3>
+  Exercise 1: Explore DNS records (Not marked, No need to submit)
+  <br>
+ </h3>
+ <p>
+  DNS servers use different record types for different purposes. For each type of DNS record, there is an associated type of DNS query. Check the following page (
+  <a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">
+   https://en.wikipedia.org/wiki/List_of_DNS_record_types
+  </a>
+  ) and find out what the following resource record types are used for:
+ </p>
+ <ul>
+  <li>
+   A
+  </li>
+  <li>
+   CNAME
+  </li>
+  <li>
+   MX
+  </li>
+  <li>
+   NS
+  </li>
+  <li>
+   PTR
+  </li>
+  <li>
+   SOA
+  </li>
+ </ul>
+ <h3>
+  Exercise 2: Tracing DNS with Wireshark (Not marked, No need to submit)
+ </h3>
+ <p>
+  For this particular experiment download the dns trace file:
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17305">
+   dns-etheral-trace-2
+  </a>
+  .
+ </p>
+ <p>
+  Step 1: Open an xterm and run Wireshark.
+ </p>
+ <p>
+  Step 2: Load the trace file
+  <i>
+   dns-ethereal-trace-2
+  </i>
+  by using the
+  <i>
+   File
+  </i>
+  pull down menu, choosing
+  <i>
+   Open
+  </i>
+  and selecting the appropriate trace file. This file captures the sequence of messages exchanged between a host and its default DNS server while using the
+  <i>
+   nslookup
+  </i>
+  (this tool is similar to the
+  <i>
+   dig
+  </i>
+  tool that we used earlier in the lab) utility for obtaining the canonical name (type A record) of
+  <a href="http://www.mit.edu/">
+   www.mit.edu
+  </a>
+  . The IP address of the default DNS server for the host is 128.238.29.22. Now filter out all non-DNS packets by typing “dns” (without quotes) in the filter field. Also click the right arrow for DNS in the packet-header detail window. Now focus on the
+  <strong>
+   last two DNS messages
+  </strong>
+  from the 6 listed and answer the following questions:
+ </p>
+ <p>
+  Question 1: What transport layer protocol is being used by the DNS messages?
+ </p>
+ <p>
+  Question 2: What is the source and destination port for the DNS query message and the corresponding response?
+ </p>
+ <p>
+  Question 3: To what IP address is the DNS query message sent? Is this the same as the default local DNS server?
+ </p>
+ <p>
+  Question 4: How many “questions” are contained in the DNS query message? What “Type” of DNS queries are they? Does the query message also contain any “answers”?
+ </p>
+ <p>
+  Question 5: Examine the DNS response message. Provide details of the contents of the “Answers”, “Authority” and “Additional Information” fields. What can you infer from these?
+ </p>
+ <p>
+  <strong>
+   <span style="font-size: 20px;">
+    Exercise 3: Digging into DNS (marked, include in the lab report)
+   </span>
+  </strong>
+ </p>
+ <p>
+  In order to answer the following questions, you will make DNS queries using some of the query types you have encountered in the above exercise. Some questions require you to make multiple DNS queries. Before you proceed, read the manpage of dig (type man dig in the terminal). Make sure you understand how you can explicitly specify the following:
+ </p>
+ <ul>
+  <li>
+   nameserver to query
+  </li>
+  <li>
+   type of DNS query to make (the default query types are those you saw in exercise 1)
+  </li>
+  <li>
+   performing reverse queries
+  </li>
+ </ul>
+ <p>
+  <strong>
+   Note:
+  </strong>
+  Include the output of all the dig commands you have used in your answers.
+ </p>
+ <p>
+  To send a query to a particular name server (say x.x.x.x) you should use the following command:
+ </p>
+ <pre>dig @x.x.x.x hostname</pre>
+ <p>
+  Question 1. What is the IP address of
+  <a href="http://www.cse.unsw.edu.au/">
+   www.cecs.anu.edu.au
+  </a>
+  . What type of DNS query is sent to get this answer?
+  <br>
+ </p>
+ <p>
+  Question 2. What is the canonical name for the CECS ANU web server? What is its IP address? Suggest a reason for having an alias for this server.
+ </p>
+ <p>
+  Question 3. What can you make of the rest of the response (i.e. the details available in the Authority and Additional sections)?
+  <br>
+ </p>
+ <p>
+  Question 4. What is the IP address of the local nameserver for your machine?
+ </p>
+ <p>
+  Question 5. What are the DNS nameservers for the “cecs.anu.edu.au” domain (note: the domain name is cecs.anu.edu.au and not
+  <a href="http://www.cse.unsw.edu.au/">
+   www.cecs.anu.edu.au
+  </a>
+  )? Find out their IP addresses? What type of DNS query is sent to obtain this information?
+ </p>
+ <p>
+  Question 6. What is the DNS name associated with the IP address 149.171.158.109? What type of DNS query is sent to obtain this information?
+ </p>
+ <p>
+  Question 7. Run dig and query the CSE nameserver (129.94.242.33) for the mail servers for Yahoo! Mail (again the domain name is yahoo.com, not
+  <a href="http://www.yahoo.com/">
+   www.yahoo.com
+  </a>
+  ). Did you get an authoritative answer? Why? (HINT: Just because a response contains information in the authoritative part of the DNS response message does not mean it came from an authoritative name server. You should examine the flags in the response to determine the answer)
+ </p>
+ <p>
+  Question 8. Repeat the above (i.e. Question 7) but use one of the nameservers obtained in Question 5. What is the result?
+  <br>
+ </p>
+ <p>
+  Question 9. Obtain the authoritative answer for the mail servers for Yahoo! mail. What type of DNS query is sent to obtain this information?
+ </p>
+ <p>
+  Question 10. In this exercise you simulate the iterative DNS query process to find the IP address of your machine (e.g. lyre00.cse.unsw.edu.au). First, find the name server (query type NS) of the "." domain (root domain). Query this nameserver to find the authoritative name server for the "au." domain. Query this second server to find the authoritative nameserver for the "edu.au." domain. Now query this nameserver to find the authoritative nameserver for "unsw.edu.au". Next query the nameserver of unsw.edu.au to find the authoritative name server of cse.unsw.edu.au. Now query the nameserver of cse.unsw.edu.au to find the IP address of your host. How many DNS servers do you have to query to get the authoritative answer?
+ </p>
+ <p>
+  Question 11. Can one physical machine have several names and/or IP addresses associated with it?
+ </p>
+ <p>
+  <strong>
+   <span style="font-size: 20px;">
+    (*) Exercise 4: A Simple Web Server
+   </span>
+  </strong>
+ </p>
+ <p>
+  <strong>
+   <span style="font-size: 18px;">
+    Note: Include your code in the lab report and demonstrate this exercise to your tutor in the lab slot.
+   </span>
+  </strong>
+ </p>
+ <p>
+  In this exercise, you will learn the basics of TCP socket programming: how to create a socket, bind it to a specific address and port, as well as send and receive an HTTP packet. You will also learn some basics of HTTP header format. You will develop a web server that handles one HTTP request at a time. Specifically, your web server should do the following:
+ </p>
+ <p>
+  (i) create a connection socket when contacted by a client (browser).
+ </p>
+ <p>
+  (ii) receive HTTP request from this connection. Your server should only process GET request. You may assume that only GET requests will be received.
+ </p>
+ <p>
+  (iii) parse the request to determine the specific file being requested.
+ </p>
+ <p>
+  (iv) get the requested file from the server's file system.
+ </p>
+ <p>
+  (v) create an HTTP response message consisting of the requested file preceded by header lines.
+ </p>
+ <p>
+  (vi) send the response over the TCP connection to the requesting browser.
+ </p>
+ <p>
+  (vii) If the requested file is not present on the server, the server should send an HTTP “404 Not Found” message back to the client.
+ </p>
+ <p>
+  (viii) the server should listen in a loop, waiting for next request from the browser.
+ </p>
+ <p>
+  You don't have to deal with any other error conditions.
+ </p>
+ <p>
+  Your program should be called WebServer.c or WebServer.java or WebServer.py.
+ </p>
+ <p>
+  You should write the server so that it executes with the following command:
+ </p>
+ <pre>$java WebServer port (for Java)</pre>
+ <pre>$WebServer port (for C)</pre>
+ <pre>$python WebServer.py port (for Python)</pre>
+ <p>
+  where port is the port No your Web server will be listening on.
+ </p>
+ <p>
+  1. Place a simple HTML file (index.html, without any hyperlinks) in the same directory as the server program. A sample index.html file is provided
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/20132" target="_blank">
+   here
+  </a>
+  . Run the server program as indicated above. Open a web browser on the same machine. Type the following url: http://
+  <em>
+   127.0.0.1:port/index.html
+  </em>
+  where
+  <em>
+   port
+  </em>
+  is the port number the server listens on. If you forget to include the port number, the browser will assume the default port of 80. The browser should display the content of index.html.
+ </p>
+ <p>
+  2. Place multiple image files (.png) in the same directory as the server program. Run the server program as indicated above. Open a web browser on the same machine. Type
+  <em>
+   http://127.0.0.1:port/myimage.png
+  </em>
+ </p>
+ <p>
+  where
+  <em>
+   port
+  </em>
+  is the port number the server listens on and
+  <em>
+   myimage.png
+  </em>
+  is one of the image files present in the server's directory. The browser should display the image.
+ </p>
+ <p>
+  <img src="http://127.0.0.1:port/myimage.png">
+  3. Now try and request for an object that does not exist in the server directory, e.g.:
+  <em>
+   http://127.0.0.1:port/bio.html
+  </em>
+  . The browser should display the 404 error message.
+ </p>
+ <p>
+  Note that you cannot use any of the pre-made web servers available in different programming languages.
+ </p>
+            <div class="clearfix">
+              <p class="pull-left"><small>Resource created <abbr class="timeago" title="Monday 16 July 2018, 02:50:39 PM">24 days ago</abbr>, last modified <abbr class="timeago" title="Tuesday 07 August 2018, 06:17:02 PM">2 days ago</abbr>.</small></p>
+            </div>
+
+
+    <div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title">
+      Comments
+      <div role="group" class="btn-group btn-group-xs pull-right comment-frame-header"><a title="Click to Subscribe" class="btn btn-default btn-xs"><i class="fa fa-bookmark-o"></i></a> <a title="Search" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/search?forum_choice=resource/17354" class="btn btn-default btn-xs"><i class="fa fa-search"></i></a> <a title="Forum View" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/resource/17354" class="btn btn-default btn-xs"><i class="fa fa-comments"></i></a></div></h3></div> <div class="panel-body"><!----> <div style="position: relative;"><i class="fa fa-fw fa-comment-o" style="position: absolute; padding: 10px; color: rgb(153, 153, 153);"></i> <input type="text" placeholder="Add a comment" class="form-control" style="padding-left: 30px;"></div> <!----> <hr> <ul class="comment-wrapper"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5149599">Kai Luo</a><small><span><abbr title="Wed Aug 08 2018 21:15:50 GMT+1000 (澳大利亚东部标准时间)">about 20 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  "If you forget to include the port number, the browser will assume the default port of 80. The browser should display the content of index.html" how to listen both the 80 port and the other port.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a><small><span><abbr title="Wed Aug 08 2018 21:48:00 GMT+1000 (澳大利亚东部标准时间)">about 19 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Use a port No other than 80 and specify that port No in URL while requesting from the browser.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5080309">David Sommerich</a><small><span><abbr title="Wed Aug 08 2018 18:39:18 GMT+1000 (澳大利亚东部标准时间)">about 22 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Which headers should our server support and respond with? Is it ok if we ignore all request headers and respond with no headers?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a><small><span><abbr title="Wed Aug 08 2018 19:23:57 GMT+1000 (澳大利亚东部标准时间)">about 22 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  You would not have control of which header lines the browser is sending you. You can choose the bare minimum header lines to include in your response. Some are really necessary such as "Content-type:" that would enable the browser to understand how to display the content.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5114185">Mohamed Al Mouiee</a><small><span><abbr title="Wed Aug 08 2018 13:29:16 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  <em>
+   <strong>
+    "Note that you cannot use any of the pre-made web servers available in different programming languages."
+   </strong>
+  </em>
+  <br>
+ </p>
+ <p>
+  What does this exactly mean? Website server templates maybe?
+  <br>
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Wed Aug 08 2018 14:23:33 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  That means you cannot use classes, libraries, etc,. that do all the job for you
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5181392">Jason Love</a><small><span><abbr title="Tue Aug 07 2018 15:06:00 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Just to clarify since there are different instructions all over the place. We are submitting only question 3&amp;4 and Q4 is also demonstrated. Is that right?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Tue Aug 07 2018 16:21:11 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Yes.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul> <!----> <!----> <!----></div></div>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="row hidden-print">
+        <div class="col-sm-12">
+          <hr>
+          <p class="pull-right"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17354#webcms3top">Back to top <i class="fa fa-caret-up"></i></a></p>
+          <div class="pull-left">
+
+          <strong>COMP3331/COMP9331 18s2 (Computer Networks and Applications)</strong>
+          is powered by <a href="https://webcms3.cse.unsw.edu.au/about">WebCMS3</a>
+          <h6><small>CRICOS Provider No. 00098G</small></h6>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/manifest.d734b08273f336355ed0.js"></script>
+    <script src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/vendor.ada5e1585a0b4a3d8330.js"></script>
+    <script src="./Lab Exercise 3_ DNS _ COMP3331 18s2 _ WebCMS3_files/app.cc304414bf40f92c3c7d.js"></script>
+
+
+
+<script>
+
+webcms.renderComments("#messaging-wrapper", {
+    object_type: 'resource',
+    object_id: 17354,
+    url: '/messages/',
+    course: '3147',
+});
+
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete-heading"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+      bootbox.dialog({
+        message: "Are you sure you wish to delete this resource heading?",
+        buttons: {
+          main: {
+            label: "No",
+            className: "btn-default",
+            callback: function() { }
+          },
+          children: {
+            label: "Yes, and delete all children too",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location + "?children=1");
+            }
+          },
+          just: {
+            label: "Yes, and move children to parent",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location);
+            }
+          }
+        }
+      });
+    });
+  });
+
+});
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+
+      bootbox.confirm("Are you sure you wish to delete this resource?", function(confirmed) {
+        if (confirmed) {
+          window.location.replace(location);
+        }
+      });
+    });
+  });
+});
+</script>
+
+
+
+    <script>
+      jQuery.timeago.settings.allowFuture = true;
+
+      $(function() {
+        $('*[id^="redactor"]').each(function () {
+          $(this).redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+
+        });
+          $('.redactor').redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+      });
+
+      $(document).ready(function() {
+        $('[data-toggle=buttons]').click(function() {
+          // Hack to get toolbar to show
+          setTimeout(function() {$('.redactor').scroll()}, 0)
+        });
+      });
+
+    </script>
+    <script>
+        $(document).on('change', '.btn-file :file', function() {
+          var input = $(this),
+              numFiles = input.get(0).files ? input.get(0).files.length : 1,
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+          input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready( function() {
+            $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+            });
+        });
+
+      $('[data-toggle="popover"]').popover();
+    </script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+      });
+
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $(document).ready(function() {
+        $('[data-toggle=offcanvas]').click(function() {
+          $('.row-offcanvas').toggleClass('active');
+        });
+      });
+    </script>
+
+
+
+
+  
+</div></body></html>

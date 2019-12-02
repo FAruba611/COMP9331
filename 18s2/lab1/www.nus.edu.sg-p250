@@ -1,0 +1,55 @@
+PING www.nus.edu.sg (137.132.21.27): 222 data bytes
+230 bytes from 137.132.21.27: icmp_seq=0 ttl=47 time=203.585 ms
+230 bytes from 137.132.21.27: icmp_seq=1 ttl=47 time=244.400 ms
+230 bytes from 137.132.21.27: icmp_seq=2 ttl=47 time=183.612 ms
+230 bytes from 137.132.21.27: icmp_seq=3 ttl=47 time=223.519 ms
+230 bytes from 137.132.21.27: icmp_seq=4 ttl=47 time=162.744 ms
+230 bytes from 137.132.21.27: icmp_seq=5 ttl=47 time=202.816 ms
+230 bytes from 137.132.21.27: icmp_seq=6 ttl=47 time=145.111 ms
+230 bytes from 137.132.21.27: icmp_seq=7 ttl=47 time=169.294 ms
+230 bytes from 137.132.21.27: icmp_seq=8 ttl=47 time=218.752 ms
+230 bytes from 137.132.21.27: icmp_seq=9 ttl=47 time=145.104 ms
+230 bytes from 137.132.21.27: icmp_seq=10 ttl=47 time=194.526 ms
+230 bytes from 137.132.21.27: icmp_seq=11 ttl=47 time=237.257 ms
+230 bytes from 137.132.21.27: icmp_seq=12 ttl=47 time=171.790 ms
+230 bytes from 137.132.21.27: icmp_seq=13 ttl=47 time=213.116 ms
+230 bytes from 137.132.21.27: icmp_seq=14 ttl=47 time=149.174 ms
+230 bytes from 137.132.21.27: icmp_seq=15 ttl=47 time=189.953 ms
+230 bytes from 137.132.21.27: icmp_seq=16 ttl=47 time=228.774 ms
+230 bytes from 137.132.21.27: icmp_seq=17 ttl=47 time=166.426 ms
+230 bytes from 137.132.21.27: icmp_seq=18 ttl=47 time=210.765 ms
+230 bytes from 137.132.21.27: icmp_seq=19 ttl=47 time=249.198 ms
+230 bytes from 137.132.21.27: icmp_seq=20 ttl=47 time=186.117 ms
+230 bytes from 137.132.21.27: icmp_seq=21 ttl=47 time=231.752 ms
+230 bytes from 137.132.21.27: icmp_seq=22 ttl=47 time=168.132 ms
+230 bytes from 137.132.21.27: icmp_seq=23 ttl=47 time=211.898 ms
+230 bytes from 137.132.21.27: icmp_seq=24 ttl=47 time=146.553 ms
+230 bytes from 137.132.21.27: icmp_seq=25 ttl=47 time=189.508 ms
+230 bytes from 137.132.21.27: icmp_seq=26 ttl=47 time=228.297 ms
+230 bytes from 137.132.21.27: icmp_seq=27 ttl=47 time=167.629 ms
+230 bytes from 137.132.21.27: icmp_seq=28 ttl=47 time=209.170 ms
+230 bytes from 137.132.21.27: icmp_seq=29 ttl=47 time=253.332 ms
+230 bytes from 137.132.21.27: icmp_seq=30 ttl=47 time=191.234 ms
+230 bytes from 137.132.21.27: icmp_seq=31 ttl=47 time=232.598 ms
+230 bytes from 137.132.21.27: icmp_seq=32 ttl=47 time=166.104 ms
+230 bytes from 137.132.21.27: icmp_seq=33 ttl=47 time=209.518 ms
+230 bytes from 137.132.21.27: icmp_seq=34 ttl=47 time=149.633 ms
+230 bytes from 137.132.21.27: icmp_seq=35 ttl=47 time=188.178 ms
+230 bytes from 137.132.21.27: icmp_seq=36 ttl=47 time=230.695 ms
+230 bytes from 137.132.21.27: icmp_seq=37 ttl=47 time=166.291 ms
+230 bytes from 137.132.21.27: icmp_seq=38 ttl=47 time=205.541 ms
+230 bytes from 137.132.21.27: icmp_seq=39 ttl=47 time=248.346 ms
+230 bytes from 137.132.21.27: icmp_seq=40 ttl=47 time=184.797 ms
+230 bytes from 137.132.21.27: icmp_seq=41 ttl=47 time=224.399 ms
+230 bytes from 137.132.21.27: icmp_seq=42 ttl=47 time=144.999 ms
+230 bytes from 137.132.21.27: icmp_seq=43 ttl=47 time=198.609 ms
+230 bytes from 137.132.21.27: icmp_seq=44 ttl=47 time=238.115 ms
+230 bytes from 137.132.21.27: icmp_seq=45 ttl=47 time=171.284 ms
+230 bytes from 137.132.21.27: icmp_seq=46 ttl=47 time=211.705 ms
+230 bytes from 137.132.21.27: icmp_seq=47 ttl=47 time=250.075 ms
+230 bytes from 137.132.21.27: icmp_seq=48 ttl=47 time=185.702 ms
+230 bytes from 137.132.21.27: icmp_seq=49 ttl=47 time=228.200 ms
+
+--- www.nus.edu.sg ping statistics ---
+50 packets transmitted, 50 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 144.999/198.567/253.332/31.737 ms

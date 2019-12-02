@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="1532662339##46eea261bde57e50031db76cb89b32c0411d07b4">
+    <title>Introduction to the Tools of the Trade |  COMP3331 18s2 | WebCMS3</title>
+
+    <link rel="icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" id="theme" href="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/lightblue.css">
+
+
+  <style type="text/css"></style><style type="text/css">.select-box{position:absolute;border:1px solid #ddd;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);background:#fff;z-index:1000}.mention{text-decoration:none!important;color:#000!important;background-color:#dce6f8;padding:0;margin-right:.5em}.user-select{list-style-type:none;list-style:none;margin:0;padding:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}.user-select li{display:block;padding:5px 10px;font-weight:600;cursor:pointer;border-bottom:1px solid #ddd}.user-select li small{font-weight:400;color:#767676}.user-select .selected small{color:#fff}.user-select .selected{background-color:#4078c0;color:#fff}</style></head>
+  <body role="document" id="webcms3top">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://webcms3.cse.unsw.edu.au/">WebCMS3</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Computer Networks and Applications">COMP9331</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9313/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Big Data Management">COMP9313</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9319/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Web Data Compression and Search">COMP9319</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9418/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Advanced Topics In Statistical Machine Learning">COMP9418</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9900/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Information Technology Project">COMP9900</a></li>
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://webcms3.cse.unsw.edu.au/search" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Search Courses"><i class="fa fa-search"></i></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <div class="nav-profile-mask">
+                    <img class="profile_picture" src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png">
+                  </div>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858"><i class="fa fa-user"></i> Profile</a></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-sm-3 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar hidden-print">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h4 class="panel-title"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">COMP9331</a> <small>18s2</small></h4>
+    </div>
+
+  </div>
+
+  <ul class="list-group">
+            <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">Home</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/outline">Course Outline</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="#side-menu3" data-toggle="collapse" data-parent=".sidebar">
+            Course Work <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse in" id="side-menu3">
+                  <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17194">Lectures</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17330">Echo 360 Lecture Recordings</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17329">Labs</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17289">Assignment</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17331">Mid-session Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17336">Final Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17360">Homework Questions</a>
+        </li>
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/">Forums</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/timetable">Timetable</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/groups/">Groups</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="#side-menu7" data-toggle="collapse" data-parent=".sidebar">
+            Staff <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse" id="side-menu7">
+          
+
+                     <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z1058484">Nadeem Ahmed</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a>
+    <span class="label label-primary">Course Admin</span>
+  </li>
+
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5042615">Luke Yuan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5036620">Weineng He</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3331774">Phuoc Tran</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5031977">Najmul Hassan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095709">Finbars Chuka Oham</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5088051">Phoebe Zhou</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5019176">Mathew Vo</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5129195">Yi Xiao</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059988">Costa Paraskevopoulos</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5109199">Marjan Moradi</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5130887">Sijun Zhu</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3202491">Sidra Malik</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5175209">Nipuna Shanthidewa</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059444">Weilon Ying</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/activities/">Activities</a>
+        </li>
+
+
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-footer">
+
+      <div class="pull-right"> 
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/users/grades" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Grades"><i class="fa fa-bar-chart"></i></a>
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/blogs/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Blog"><i class="fa fa-comment"></i></a>
+      </div>
+      Changfeng Li<br>
+      <small>Student</small>
+    </div>
+  </div>
+  
+</div>
+          </div>
+          <div class="col-sm-9 col-md-9 main">
+            <p class="visible-xs hidden-print">
+              <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i> Toggle Menu</button>
+            </p>
+<ol class="breadcrumb">
+  <li>Resources</li>
+
+  <li><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17340">Lab Exercises</a></li>
+
+  <li class="active">Introduction to the Tools of the Trade</li>
+</ol>
+<div class="page-header with-breadcrumb">
+  <h1 style="display:inline;">Introduction to the Tools of the Trade</h1> 
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+     <div class="clearfix">
+
+
+    </div>
+  
+    <br>
+
+
+
+             <p style="text-align: justify;">
+  <b>
+   NOTE: This is not a lab exercise. Rather this is reference guide to various tools that will be used in the lab exercises.
+  </b>
+ </p>
+ <p style="text-align: justify;">
+  <strong>
+   Attention:
+  </strong>
+  The descriptions of the commands in here are not complete. This 
+document is given as a guideline and may be used as quick reference. To 
+obtain more information about the capabilities and the syntax of these 
+commands take a look at the man pages or simply use
+  <a href="http://en.wikipedia.org/">
+   Wikipedia
+  </a>
+  or
+  <a href="http://www.google.com.au/">
+   Google
+  </a>
+  .
+ </p>
+ <p style="text-align: justify;">
+  <em>
+   Remark:
+  </em>
+  Certain tools can be found in following directories: /usr/sbin, /usr/local/bin.
+ </p>
+ <h3>
+  ping
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   ping
+  </b>
+  utility is used to check connectivity to a host (to check if a host 
+operating and network connections are intact). A small packet is sent 
+through the network to a particular IP address. This packet contains 64 
+bytes - 56 data bytes and 8 bytes of protocol header information. The 
+host that sent the packet then waits (or 'listens') for a return packet.
+ If the connections are good and the target host is up, a good return 
+packet will be received. The
+  <b>
+   ping
+  </b>
+  can also measure the round trip time of a packet. We use the following forms of the command:
+ </p>
+ <pre>$ ping host</pre>
+ <p style="text-align: justify;">
+  It gives only the answer if the connectivity to the host is OK or not.
+ </p>
+ <pre>$ ping -s packetsize host </pre>
+ <p style="text-align: justify;">
+  Option -s
+  <i>
+   packetsize
+  </i>
+  specifies the number of data bytes to be sent. The default is 56.
+ </p>
+ <pre>$ ping -i interval host </pre>
+ <p style="text-align: justify;">
+  Option -i
+  <i>
+   interval
+  </i>
+  specifies the interval between sending ping requests. The default is one second.
+ </p>
+ <h3>
+  traceroute
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   traceroute
+  </b>
+  utility traces the route that an IP packet follows from your host to 
+another Internet host. It shows how a host is physically connected to 
+the Internet. Along the way it gives an understanding of how networks 
+inter-connect. This network utility can also measure the round trip time
+ between your host and the intermediate routers along the path.
+ </p>
+ <p style="text-align: justify;">
+  The traceroute command is used to discover the routes that packets 
+actually take when traveling to their destination. The device (for 
+example, a router or a PC) sends out a sequence of User Datagram 
+Protocol (UDP) datagrams to an invalid port address at the remote host. 
+The default IP probe packet which encapsulates the UDP datagram is 40 
+bytes.
+ </p>
+ <p style="text-align: justify;">
+  Three UDP datagrams are sent, each with a Time-To-Live (TTL) field 
+value set to one. The TTL value of 1 causes the datagram to "timeout" as
+ soon as it hits the first router in the path; this router then responds
+ with an ICMP Time Exceeded Message (TEM) indicating that the datagram 
+has expired.
+ </p>
+ <p style="text-align: justify;">
+  Another three UDP messages are now sent, each with the TTL value set 
+to 2, which causes the second router to return ICMP TEMs. This process 
+continues until the packets actually reach the destination. Since these 
+datagrams are trying to access an invalid port at the destination host, 
+ICMP Port Unreachable Messages are returned, indicating an unreachable 
+port; this event signals the Traceroute program that it is finished.
+ </p>
+ <p style="text-align: justify;">
+  The purpose behind this is to record the source of each ICMP Time 
+Exceeded Message to provide a trace of the path the packet took to reach
+ the destination.
+ </p>
+ <pre>$ traceroute host</pre>
+ <h3>
+  telnet (obsolete)
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   telnet
+  </b>
+  utility is used to connect from one host to another (remote login) via
+ the internet network. This command allows you to log onto machines 
+around the world that you have accounts on or that allow public access. 
+The most common way to use the command is:
+ </p>
+ <pre>$ telnet host [port]</pre>
+ <p style="text-align: justify;">
+  port indicates a port number (address of an application); if it is not specified, than the default telnet port is used.
+ </p>
+ <p style="text-align: justify;">
+  After issuing the
+  <b>
+   telnet
+  </b>
+  command, you will be presented with a login prompt for the host 
+system. You may now login to the host system. When you are finished with
+ your remote session, logout as usual.
+ </p>
+ <h3>
+  ssh
+ </h3>
+ <p style="text-align: justify;">
+  SSH is a set of standards and an associated network protocol that 
+allows establishing a secure channel between a local and a remote 
+computer. The SSH client -
+  <b>
+   ssh
+  </b>
+  - that supports terminal protocols is typically used for remote 
+administration of the SSH server computer via terminal console, thus it 
+is used as an alternative to
+  <b>
+   telnet
+  </b>
+  . The most common way to use the command is:
+ </p>
+ <pre>$ ssh -l username hostname</pre>
+ <p style="text-align: justify;">
+  <i>
+  </i>
+  or
+ </p>
+ <pre>$ ssh username@hostname</pre>
+ <p style="text-align: justify;">
+  After issuing the
+  <b>
+   ssh
+  </b>
+  command, if the remote computer authenticates you successfully, you 
+will be presented with a login prompt for the remote machine. You may 
+now login to the host system. When you are finished with your remote 
+session, logout as usual.
+ </p>
+ <h3>
+  ifconfig
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   ifconfig
+  </b>
+  utility is used to assign an address to a network interface and to 
+configure or display the current network interface configuration 
+information. It must be used at system startup to define the network 
+address of each interface present on a machine. After system startup, it
+ can also be used to redefine an interface's address and its other 
+operating parameters. If a single interface argument is given, it 
+displays the status of the given interface only; if a single -a argument
+ is given, it displays the status of all interfaces. Otherwise, it 
+configures an interface.
+ </p>
+ <p style="text-align: justify;">
+  Note: the directory /sbin is not the path of a typical user. So you may have to type /sbin/ifconfig
+ </p>
+ <h3>
+  netstat
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   netstat
+  </b>
+  utility allows to print the various data related to the network 
+configuration of a station. Here, we show only two forms of this 
+command:
+ </p>
+ <p style="text-align: justify;">
+  Option -i allows to print the state of the network interfaces (e.g. eth0 or lo).
+ </p>
+ <p style="text-align: justify;">
+  The MTU and Met fields show the current MTU and metric values for that
+ interface. The RX and TX columns show how many packets have been 
+received or transmitted error-free (RX-OK/TX-OK) or damaged 
+(RX-ERR/TX-ERR); how many were dropped (RX-DRP/TX-DRP); and how many 
+were lost because of an overrun (RX-OVR/TX-OVR).
+ </p>
+ <p style="text-align: justify;">
+  The last column shows the flags that have been set for this interface.
+ These characters are one-character versions of the long flag names that
+ are printed when you display the interface configuration with
+  <b>
+   ifconfig
+  </b>
+  :
+ </p>
+ <ul>
+  <li>
+   B - A broadcast address has been set
+  </li>
+  <li>
+   L - This interface is a loopback device
+  </li>
+  <li>
+   M - All packets are received (promiscuous mode)
+  </li>
+  <li>
+   O - ARP is turned off for this interface
+  </li>
+  <li>
+   P - This is a point-to-point connection
+  </li>
+  <li>
+   R - Interface is running
+  </li>
+  <li>
+   U - Interface is up
+  </li>
+ </ul>
+ <p style="text-align: justify;">
+  When you invoke
+  <b>
+   netstat
+  </b>
+  with the -r flag, it displays the kernel routing table. The -n option makes
+  <b>
+   netstat
+  </b>
+  print addresses as dotted quad IP numbers rather than the symbolic 
+host and network names. This option is especially useful when you want 
+to avoid address lookups over the network (e.g., to a DNS or NIS 
+server).
+ </p>
+ <p style="text-align: justify;">
+  The second column of
+  <b>
+   netstat
+  </b>
+  's output shows the gateway to which the routing entry points. If no 
+gateway is used, an asterisk is printed instead. The third column shows 
+the "generality" of the route, i.e., the network mask for this route. 
+The fourth column displays the following flags that describe the route:
+ </p>
+ <ul>
+  <li>
+   G - The route uses a gateway
+  </li>
+  <li>
+   U - The interface to be used is up
+  </li>
+  <li>
+   H - Only a single host can be reached through the route
+  </li>
+  <li>
+   D - This route is dynamically created. It is set if the table entry 
+has been generated by a routing daemon like gated or by an ICMP redirect
+ message
+  </li>
+  <li>
+   M - This route is set if the table entry was modified by an ICMP redirect message
+  </li>
+  <li>
+   ! - The route is a reject route and datagrams will be dropped
+  </li>
+ </ul>
+ <h3>
+  netperf
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   netperf
+  </b>
+  utility provides tests for both unidirectional throughput and 
+end-to-end latency. The calculation of these parameters is based on 
+measuring the time necessary to transmit messages of fixed size by TCP.
+ </p>
+ <p style="text-align: justify;">
+  The most common use of
+  <b>
+   netperf
+  </b>
+  is measuring bulk data transfer performance. This is also referred to 
+as "stream" or "unidirectional stream" performance. Essentially, these 
+tests will measure how fast one system can send data to another and/or 
+how fast that other system can receive it. Request/response performance 
+is the second area that can be investigated with
+  <b>
+   netperf
+  </b>
+  . Generally speaking,
+  <b>
+   netperf
+  </b>
+  request/response performance is quoted as "transactions/s" for a given
+ request and response size. A transaction is defined as the exchange of a
+ single request and a single response. From a transaction rate, one can 
+infer one way and round-trip average latency.
+ </p>
+ <pre>$ netperf host [message_size [count]]</pre>
+ <p style="text-align: justify;">
+  The obligatorily parameter is the name or address of a destination 
+towards which we want to measure the performance. The optional 
+parameters are the size of the messages (in Bytes, by default 1024) and 
+the number of messages to be sent (if the latter is not specified, 
+netperf sends messages until you stop it by Ctrl-C).
+ </p>
+ <p style="text-align: justify;">
+  <b>
+   netperf
+  </b>
+  prints a statistics report regularly (approximately every second) in a table of 5 columns with the following heading:
+ </p>
+ <pre>Total Delta | Avg 1 Avg 10 Avg (kbits/s)
+
+</pre>
+ <p style="text-align: justify;">
+  "Total" is the total number of messages sent since the launching of 
+netperf; "Delta" is the number of messages sent since the preceding 
+report/ratio; "Avg 1" is the average throughput since the preceding 
+report; "Avg 10" is the average throughput during the last 10 reports; 
+"Avg" is the average throughput since the launching of netperf. All the 
+throughputs are expressed in Kbit/s.
+  <b>
+  </b>
+ </p>
+ <h3>
+  nslookup, dig, host
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   nslookup
+  </b>
+  utility is used to find out the corresponding IP address of a host 
+name (e.g., "whatis.com") by contacting Internet Domain Name Servers. It
+ also does reverse name lookup and find the host name for a specified IP
+ address. It has two modes: interactive and non-interactive. Interactive
+ mode is used to get information about various hosts and domains or to 
+displays a list of hosts in a domain. Non-interactive mode is used to 
+display just the name and requested information for a host or domain.
+ </p>
+ <p style="text-align: justify;">
+  Non-interactive mode:
+ </p>
+ <pre>$ nslookup host</pre>
+ <p style="text-align: justify;">
+  Interactive mode:
+ </p>
+ <pre>$ nslookup
+&gt; server ns1.nic.fr
+&gt; set q=NS
+&gt; imag.fr.
+Server: ns1.nic.fr
+Address: 192.93.0.1
+Non-authoritative answer:
+imag.fr nameserver = dns.inria.fr
+imag.fr nameserver = imag.imag.fr
+imag.fr nameserver = isis.imag.fr
+imag.fr nameserver = ns2.nic.fr
+Authoritative answers can be found from:
+dns.inria.fr internet address = 193.51.208.13
+imag.imag.fr internet address = 129.88.30.1
+isis.imag.fr internet address = 129.88.32.24
+ns2.nic.fr internet address = 192.93.0.4</pre>
+ <p style="text-align: justify;">
+  The
+  <b>
+   dig
+  </b>
+  command is similar to nslookup. It is a tool for querying DNS 
+nameservers for information about host addresses, mail exchanges, 
+nameservers, and related information. It performs DNS lookups and 
+displays the answers that are returned from the name server(s) that were
+ queried. As with nslookup, dig provides the possibility of inverse DNS 
+queries through when the
+  <b>
+   -x
+  </b>
+  option is given.
+ </p>
+ <p style="text-align: justify;">
+  Most DNS administrators use dig to troubleshoot DNS problems because 
+of its flexibility, ease of use and clarity of output. Other lookup 
+tools tend to have less functionality than dig.
+ </p>
+ <p style="text-align: justify;">
+  Although dig is normally used with command-line arguments, it also has
+ a batch mode of operation for reading lookup requests from a file. A 
+brief summary of its command-line arguments and options is printed when 
+the
+  <b>
+   -h
+  </b>
+  option is given. A further description may be found at the man page or
+  <a href="http://www.thegeekstuff.com/2012/02/dig-command-examples/">
+   here
+  </a>
+  .
+ </p>
+ <p style="text-align: justify;">
+  Below, you may also find a short description of the sections, which are returned by the dig command.
+ </p>
+ <p style="text-align: justify;">
+  HEADER: This displays the dig command version number, the global 
+options used by the dig command, and few additional header information.
+ </p>
+ <p style="text-align: justify;">
+  QUESTION SECTION: This displays the question it asked the DNS. i.e 
+This is one's input. If one has given the command dig WEBSITE, dig will 
+indicate in this section the WEBSITE (e.g. cnn.com) that we asked for 
+along with the type of the query. The default type dig command uses is 
+"A record".
+ </p>
+ <p style="text-align: justify;">
+  ANSWER SECTION: This displays the answer it receives from the DNS. i.e
+ This is the output. For the default query type, this displays the "A 
+record" of the WEBSITE (e.g. cnn.com).
+ </p>
+ <p style="text-align: justify;">
+  AUTHORITY SECTION: This displays the DNS name server that has the 
+authority to respond to this query. Basically this displays available 
+name servers of the website.
+ </p>
+ <p style="text-align: justify;">
+  ADDITIONAL SECTION: This displays the ip address of the name servers 
+listed in the AUTHORITY SECTION. Stats section at the bottom displays 
+few dig command statistics including how much time it took to execute 
+this query.
+ </p>
+ <p style="text-align: justify;">
+  Another useful command, but with lower functionality of both nslookup and dig is the
+  <b>
+   host
+  </b>
+  command. It is a simple utility for performing DNS lookups. It is 
+normally used to convert names to IP addresses and vice versa. When no 
+arguments or options are given, host prints a short summary of its 
+command line arguments and options.
+ </p>
+ <h3>
+  grep
+ </h3>
+ <p style="text-align: justify;">
+  The
+  <b>
+   grep
+  </b>
+  utility searches text files for a pattern and prints all lines that 
+contain that pattern. If you want to search for a fixed string you 
+should rather use
+  <b>
+   fgrep
+  </b>
+  . For example, to find which port protocol SMTP uses type the following:
+ </p>
+ <pre>$ fgrep smtp /etc/services
+smtp 25/tcp mail
+ssmtp 465/tcp # SMTP over SSL
+</pre>
+ <p style="text-align: justify;">
+  <b>
+   Wireshark (
+   <i>
+    formerly known as
+   </i>
+   Ethereal)
+  </b>
+ </p>
+ <p style="text-align: justify;">
+  <b>
+   Wireshark
+  </b>
+  is a free software protocol analyzer, or packet sniffer application, 
+used for network troubleshooting, analysis, software and protocol 
+development, and education. It has all of the standard features of a 
+protocol analyzer. The functionality it provides is very similar to
+  <b>
+   tcpdump
+  </b>
+  , but it has a GUI front-end, and many more information sorting and 
+filtering options. It allows the user to see all traffic being passed 
+over the network by putting the network card into promiscuous mode. 
+Moreover, it "understands" the structure of different network protocols 
+and thus it's able to display encapsulation and single fields and 
+interpret their meaning.
+ </p>
+ <p style="text-align: justify;">
+  The basic tool for observing the messages exchanged between executing protocol entities is called a
+  <b>
+   packet sniffer
+  </b>
+  . As the name suggests, a packet sniffer captures (“sniffs”) messages 
+being sent/received from/by your computer; it will also typically store 
+and/or display the contents of the various protocol fields in these 
+captured messages. A packet sniffer itself is passive. It observes 
+messages being sent and received by applications and protocols running 
+on your computer, but never sends packets itself. Similarly, received 
+packets are never explicitly addressed to the packet sniffer. Instead, a
+ packet sniffer receives a copy of packets that are sent/received 
+from/by application and protocols executing on your machine.
+ </p>
+ <p>
+  <img src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/sniffer.png" style="width: 469px; height: 247.0829268292683px;">
+ </p>
+ <p style="text-align: justify;">
+  Figure 1 shows the structure of a packet sniffer. At the right of 
+Figure 1 are the protocols (in this case, Internet protocols) and 
+applications (such as a web browser or ftp client) that normally run on 
+your computer. The packet sniffer, shown within the dashed rectangle in 
+Figure 1 is an addition to the usual software in your computer, and 
+consists of two parts. The
+  <b>
+   packet capture library
+  </b>
+  receives a copy of every link-layer frame that is sent from or 
+received by your computer. Recall from the discussion from Section 1.5 
+in the textbook (Figure 1.20) that messages exchanged by higher layer 
+protocols such as HTTP, FTP, TCP, UDP, DNS, or IP all are eventually 
+encapsulated in link-layer frames that are transmitted over physical 
+media such as an Ethernet cable. In Figure 1, the assumed physical media
+ is an Ethernet, and so all higher layer protocols are eventually 
+encapsulated within an Ethernet frame. Capturing all link-layer frames 
+thus gives you all messages sent/received from/by all protocols and 
+applications executing in your computer.
+ </p>
+ <p style="text-align: justify;">
+  The second component of a packet sniffer is the
+  <b>
+   packet analyzer
+  </b>
+  , which displays the contents of all fields within a protocol message.
+ In order to do so, the packet analyzer must “understand” the structure 
+of all messages exchanged by protocols. For example, suppose we are 
+interested in displaying the various fields in messages exchanged by the
+ HTTP protocol in Figure 1. The packet analyzer understands the format 
+of Ethernet frames, and so can identify the IP datagram within an 
+Ethernet frame. It also understands the IP datagram format, so that it 
+can extract the TCP segment within the IP datagram. Finally, it 
+understands the TCP segment structure, so it can extract the HTTP 
+message contained in the TCP segment. Finally, it understands the HTTP 
+protocol and so, for example, knows that the first bytes of an HTTP 
+message will contain the string “GET,” “POST,” or “HEAD,” as shown in 
+Figure 2.8 in the text.
+ </p>
+ <p style="text-align: justify;">
+  We will be using the Wireshark packet sniffer [
+  <a href="http://www.wireshark.org/">
+   http://www.wireshark.org
+  </a>
+  ] for these labs, allowing us to display the contents of messages 
+being sent/received from/by protocols at different levels of the 
+protocol stack. (Technically speaking, Wireshark is a packet analyzer 
+that uses a packet capture library in your computer). Wireshark is a 
+free network protocol analyzer that runs on Windows, Linux/Unix, and Mac
+ computers. It’s an ideal packet analyzer for our labs – it is stable, 
+has a large user base and well-documented support that includes a
+  <a href="http://www.wireshark.org/docs/wsug_html_chunked/">
+   user-guide
+  </a>
+  ,
+  <a href="http://www.wireshark.org/docs/man-pages/">
+   man pages
+  </a>
+  , and a detailed
+  <a href="http://www.wireshark.org/faq.html">
+   FAQ
+  </a>
+  , rich functionality that includes the capability to analyze more than
+ 500 protocols, and a well-designed user interface. It operates in 
+computers using Ethernet, Token-Ring, FDDI, serial (PPP and SLIP), 
+802.11 wireless LANs and ATM connections (if the OS on which it’s 
+running allows Wireshark to do so). Wireshark was previously known as 
+“Ethereal”.
+ </p>
+ <h4 style="text-align: justify;">
+  Running Wireshark
+ </h4>
+ <p style="text-align: justify;">
+  <img src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/wireshark.png" style="width: 502px; height: 346.2928039702233px;">
+ </p>
+ <p style="text-align: justify;">
+  To run wireshark type “wireshark” at the command prompt (in case there
+ is a problem with your path, type /usr/bin/wireshark). When you run the
+ Wireshark program, the Wireshark graphical user interface shown in 
+Figure 2 will de displayed. Initially, no data will be displayed in the 
+various windows. The Wireshark interface has five major components:
+ </p>
+ <ol>
+  <li>
+   The
+   <b>
+    command menus
+   </b>
+   are standard pull down menus located at the top of the window. Of 
+interest to us now are the File and Capture menus. The File menu allows 
+you to save captured packet data or open a file containing previously 
+captured packet data, and exit the Wireshark application. The Capture 
+menu allows you to begin packet capture.
+  </li>
+  <li>
+   <b>
+    The packet-listing window
+   </b>
+   displays a one-line summary for each packet captured, including the 
+packet number (assigned by Wireshark; this is not a packet number 
+contained in any protocol’s header), the time at which the packet was 
+captured, the packet’s source and destination addresses, the protocol 
+type, and protocol-specific information contained in the packet. The 
+packet listing can be sorted according to any of these categories by 
+clicking on a column name. The protocol type field lists the 
+highest-level protocol that sent or received this packet, i.e., the 
+protocol that is the source or ultimate sink for this packet.
+  </li>
+  <li>
+   <span>
+   </span>
+   The
+   <b>
+    packet-header details window
+   </b>
+   provides details about the packet selected (highlighted) in the 
+packet-listing window. (To select a packet in the packet-listing window,
+ place the cursor over the packet’s one-line summary in the 
+packet-listing window and click with the left mouse button.). These 
+details include information about the Ethernet frame and IP datagram 
+that contains this packet. The amount of Ethernet and IP-layer detail 
+displayed can be expanded or minimized by clicking on the right-pointing
+ or down-pointing arrowhead to the left of the Ethernet frame or IP 
+datagram line in the packet details window. If the packet has been 
+carried over TCP or UDP, TCP or UDP details will also be displayed, 
+which can similarly be expanded or minimized. Finally, details about the
+ highest-level protocol that sent or received this packet are also 
+provided.
+  </li>
+  <li>
+   The
+   <b>
+    packet-contents window
+   </b>
+   displays the entire contents of the captured frame, in both ASCII and hexadecimal format.
+  </li>
+  <li>
+   <span>
+   </span>
+   Towards the top of the Wireshark graphical user interface, is the
+   <b>
+    packet display filter field
+   </b>
+   , into which a protocol name or other information can be entered in 
+order to filter the information displayed in the packet-listing window 
+(and hence the packet-header and packet-contents windows). In the 
+example below, we’ll use the packet-display filter field to have 
+Wireshark hide (not display) packets except those that correspond to 
+HTTP messages.
+  </li>
+ </ol>
+            <div class="clearfix">
+              <p class="pull-left"><small>Resource created <abbr class="timeago" title="Monday 16 July 2018, 02:50:39 PM">11 days ago</abbr>, last modified <abbr class="timeago" title="Wednesday 25 July 2018, 02:31:43 PM">2 days ago</abbr>.</small></p>
+            </div>
+
+
+    <div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title">
+      Comments
+      <div role="group" class="btn-group btn-group-xs pull-right comment-frame-header"><a title="Click to Subscribe" class="btn btn-default btn-xs"><i class="fa fa-bookmark-o"></i></a> <a title="Search" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/search?forum_choice=resource/17358" class="btn btn-default btn-xs"><i class="fa fa-search"></i></a> <a title="Forum View" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/resource/17358" class="btn btn-default btn-xs"><i class="fa fa-comments"></i></a></div></h3></div> <div class="panel-body"><!----> <div style="position: relative;"><i class="fa fa-fw fa-comment-o" style="position: absolute; padding: 10px; color: rgb(153, 153, 153);"></i> <input placeholder="Add a comment" class="form-control" style="padding-left: 30px;" type="text"></div> <!----> <hr> <ul class="comment-wrapper"></ul> <div><span class="no-messages-error">There are no comments yet.</span></div> <!----> <!----></div></div>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="row hidden-print">
+        <div class="col-sm-12">
+          <hr>
+          <p class="pull-right"><a href="#webcms3top">Back to top <i class="fa fa-caret-up"></i></a></p>
+          <div class="pull-left">
+
+          <strong>COMP3331/COMP9331 18s2 (Computer Networks and Applications)</strong>
+          is powered by <a href="https://webcms3.cse.unsw.edu.au/about">WebCMS3</a>
+          <h6><small>CRICOS Provider No. 00098G</small></h6>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/manifest.js"></script>
+    <script src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/vendor.js"></script>
+    <script src="Introduction%20to%20the%20Tools%20of%20the%20Trade%20|%20COMP3331%2018s2%20|%20WebCMS3_files/app.js"></script>
+
+
+
+<script>
+
+webcms.renderComments("#messaging-wrapper", {
+    object_type: 'resource',
+    object_id: 17358,
+    url: '/messages/',
+    course: '3147',
+});
+
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete-heading"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+      bootbox.dialog({
+        message: "Are you sure you wish to delete this resource heading?",
+        buttons: {
+          main: {
+            label: "No",
+            className: "btn-default",
+            callback: function() { }
+          },
+          children: {
+            label: "Yes, and delete all children too",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location + "?children=1");
+            }
+          },
+          just: {
+            label: "Yes, and move children to parent",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location);
+            }
+          }
+        }
+      });
+    });
+  });
+
+});
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+
+      bootbox.confirm("Are you sure you wish to delete this resource?", function(confirmed) {
+        if (confirmed) {
+          window.location.replace(location);
+        }
+      });
+    });
+  });
+});
+</script>
+
+
+
+    <script>
+      jQuery.timeago.settings.allowFuture = true;
+
+      $(function() {
+        $('*[id^="redactor"]').each(function () {
+          $(this).redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+
+        });
+          $('.redactor').redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+      });
+
+      $(document).ready(function() {
+        $('[data-toggle=buttons]').click(function() {
+          // Hack to get toolbar to show
+          setTimeout(function() {$('.redactor').scroll()}, 0)
+        });
+      });
+
+    </script>
+    <script>
+        $(document).on('change', '.btn-file :file', function() {
+          var input = $(this),
+              numFiles = input.get(0).files ? input.get(0).files.length : 1,
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+          input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready( function() {
+            $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+            });
+        });
+
+      $('[data-toggle="popover"]').popover();
+    </script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+      });
+
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $(document).ready(function() {
+        $('[data-toggle=offcanvas]').click(function() {
+          $('.row-offcanvas').toggleClass('active');
+        });
+      });
+    </script>
+
+
+
+
+  
+</div></body></html>

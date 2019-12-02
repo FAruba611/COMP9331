@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="1536225549##661d012e87159a16e110ecb7024df5fd98d24852">
+    <title>Lab Exercise 4: Exploring TCP |  COMP3331 18s2 | WebCMS3</title>
+
+    <link rel="icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" id="theme" href="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/lightblue.theme.44067b4b68fb1bc5f547f238785c61c1.css">
+
+
+  <style type="text/css"></style><style type="text/css">.select-box{position:absolute;border:1px solid #ddd;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);background:#fff;z-index:1000}.mention{text-decoration:none!important;color:#000!important;background-color:#dce6f8;padding:0;margin-right:.5em}.user-select{list-style-type:none;list-style:none;margin:0;padding:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}.user-select li{display:block;padding:5px 10px;font-weight:600;cursor:pointer;border-bottom:1px solid #ddd}.user-select li small{font-weight:400;color:#767676}.user-select .selected small{color:#fff}.user-select .selected{background-color:#4078c0;color:#fff}</style></head>
+  <body role="document" id="webcms3top">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://webcms3.cse.unsw.edu.au/">WebCMS3</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Computer Networks and Applications">COMP9331</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9313/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Big Data Management">COMP9313</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9319/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Web Data Compression and Search">COMP9319</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9418/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Advanced Topics In Statistical Machine Learning">COMP9418</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9900/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Information Technology Project">COMP9900</a></li>
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://webcms3.cse.unsw.edu.au/search" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Search Courses"><i class="fa fa-search"></i></a></li>
+              <li class="dropdown">
+                <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <div class="nav-profile-mask">
+                    <img class="profile_picture" src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png">
+                  </div>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858"><i class="fa fa-user"></i> Profile</a></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-sm-3 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar hidden-print">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h4 class="panel-title"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">COMP9331</a> <small>18s2</small></h4>
+    </div>
+
+  </div>
+
+  <ul class="list-group">
+            <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">Home</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/outline">Course Outline</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#side-menu3" data-toggle="collapse" data-parent=".sidebar">
+            Course Work <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse in" id="side-menu3">
+                  <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17194">Lectures</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17330">Echo 360 Lecture Recordings</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17329">Labs</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17289">Assignment</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17331">Mid-session Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17336">Final Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17360">Homework Questions</a>
+        </li>
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/">Forums</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/timetable">Timetable</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/groups/">Groups</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#side-menu7" data-toggle="collapse" data-parent=".sidebar">
+            Staff <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse" id="side-menu7">
+          
+
+                     <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a>
+    <span class="label label-primary">Course Admin</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3004991">Mahbub Hassan</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3116703">Salil Kanhere</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5042615">Luke Yuan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5036620">Weineng He</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3331774">Phuoc Tran</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5031977">Najmul Hassan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095709">Finbars Chuka Oham</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5088051">Phoebe Zhou</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5019176">Mathew Vo</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5129195">Yi Xiao</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059988">Costa Paraskevopoulos</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5109199">Marjan Moradi</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5130887">Sijun Zhu</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3202491">Sidra Malik</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5175209">Nipuna Shanthidewa</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059444">Weilon Ying</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z8470184">Mei Cheng Whale</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/activities/">Activities</a>
+        </li>
+
+
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-footer">
+
+      <div class="pull-right"> 
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/users/grades" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Grades"><i class="fa fa-bar-chart"></i></a>
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/blogs/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Blog"><i class="fa fa-comment"></i></a>
+      </div>
+      Changfeng Li<br>
+      <small>Student</small>
+    </div>
+  </div>
+  
+</div>
+          </div>
+          <div class="col-sm-9 col-md-9 main">
+            <p class="visible-xs hidden-print">
+              <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i> Toggle Menu</button>
+            </p>
+<ol class="breadcrumb">
+  <li>Resources</li>
+
+  <li><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17340">Lab Exercises</a></li>
+
+  <li class="active">Lab Exercise 4: Exploring TCP</li>
+</ol>
+<div class="page-header with-breadcrumb">
+  <h1 style="display:inline;">Lab Exercise 4: Exploring TCP</h1> 
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+     <div class="clearfix">
+
+
+    </div>
+  
+    <br>
+
+
+
+             <h3>
+  <br>
+ </h3>
+ <table class="table">
+  <tbody>
+   <tr>
+    <td style="text-align: center;">
+     <span style="font-size: 20px;">
+      There are 7 labs during this course. For each student, the 5 best performing labs will contribute to your final lab mark.
+     </span>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <h3>
+  <br>
+ </h3>
+ <h3>
+  Objectives:
+ </h3>
+ <ul>
+  <li>
+   gain insights into the operation of TCP.
+  </li>
+  <li>
+   get familiar with the ns-2 simulator (as preparation for the next two labs)
+  </li>
+ </ul>
+ <h3>
+  Prerequisites and Links:
+ </h3>
+ <ul>
+  <li>
+   Week 4, 5 &amp; 6 Lectures
+  </li>
+  <li>
+   Relevant Parts of Chapter 3 of the textbook
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17358" target="_blank">
+    Introduction to Tools of the Trade
+   </a>
+  </li>
+  <li>
+   Basic understanding of Linux. A good resource is
+   <a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">
+    here
+   </a>
+   but there are several other resources online:
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17307" target="_blank">
+    tcp-ethereal-trace-1
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17316" target="_blank">
+    Overview slides
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17308" target="_blank">
+    simpleSim.tcl
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17315" target="_blank">
+    Explanation of script simpleSim.tcl
+   </a>
+  </li>
+ </ul>
+ <h3>
+  Marks:
+  <strong>
+   10 marks.
+  </strong>
+ </h3>
+ <ul>
+  <li>
+   This lab only requires submission of a lab report.
+  </li>
+  <li>
+   Please attend the lab in your allocated lab time slot.
+  </li>
+  <li>
+   This lab comprises of a number of exercises. Pl note that not all the exercises for this lab are marked. You have to submit a report containing answers for all questions in Exercise 1 and 2 only.
+  </li>
+  <li>
+   We expect the students to go through as much of the lab exercises as they can at home and come to the lab for clarifying any doubts in procedure/specifications.
+  </li>
+ </ul>
+ <h3>
+  Deadline:
+ </h3>
+ <p>
+  <em>
+   <strong>
+    Midnight Friday 7th Sep 2018
+   </strong>
+  </em>
+  . You can submit as many times as you wish before the deadline. A later submission will override the earlier submission, so make sure you submit the correct file. Do not leave until the last moment to submit, as there may be technical or communications error and you will not have time to rectify it.
+ </p>
+ <h3>
+  Late Submission Penalty:
+ </h3>
+ <p>
+  Late penalty will be applied as follows:
+ </p>
+ <ul>
+  <li>
+   1 day after deadline: 20% reduction
+  </li>
+  <li>
+   2 days after deadline: 40% reduction
+  </li>
+  <li>
+   3 days after deadline: 60% reduction
+  </li>
+  <li>
+   4 or more days late: NOT accepted
+  </li>
+ </ul>
+ <p>
+  Note that the above penalty is applied to your final mark. For example, if you submit your lab work 2 days late and your score on the lab is 8, then your final mark will be 8 - 3.2 (40% penalty) = 4.8.
+ </p>
+ <h3>
+  Submission Instructions:
+  <br>
+ </h3>
+ <p>
+  Submit a PDF document
+  <strong>
+   Lab4.pdf
+  </strong>
+  with answers to all questions for Exercise 1 &amp; 2 only.
+  <b>
+   There is no need to create an archive.
+  </b>
+  Submit the pdf directly.
+ </p>
+ <h3>
+  Original Work Only:
+ </h3>
+ <p>
+  You are strongly encouraged to discuss the questions with other students in your lab. However, each student must submit his or her own work. You may need to refer to the material indicated above (particularly Tools of the Trade document) and also conduct your own research to answer the questions.
+ </p>
+ <h3>
+  Exercise 1: Understanding TCP using Wireshark
+ </h3>
+ <p>
+  For this particular experiment download the trace file:
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17307" target="_blank">
+   tcp-ethereal-trace-1
+  </a>
+  <i>
+   .
+  </i>
+ </p>
+ <p>
+  The following indicate the steps for this experiment:
+ </p>
+ <p>
+  Step 1: Start Wireshark by typing
+  <i>
+   wireshark
+  </i>
+  at the command prompt.
+ </p>
+ <p>
+  Step 2: Load the trace file
+  <i>
+   tcp-ethereal-trace-1
+  </i>
+  by using the
+  <i>
+   File
+  </i>
+  pull down menu, choosing
+  <i>
+   Open
+  </i>
+  and selecting the appropriate trace file. This file captures the sequence of messages exchanged between a host and a remote server (gaia.cs.umass.edu). The host transfers a 150 KB text file, which contains the text of Lewis Carrol’s
+  <i>
+   Alice’s Adventure in Wonderland
+  </i>
+  to the server. Note that the file is being transferred from the host to the server using a HTTP POST message.
+ </p>
+ <p>
+  Step 3: Now filter out all non-TCP packets by typing “tcp” (without quotes) in the filter field towards the top of the Wireshark window. You should see a series of TCP segments between the host in MIT and gaia.cs.umass.edu. The first three segments of the trace consist of the initial three-way handshake containing the SYN, SYN ACK and ACK messages. You should see an HTTP POST message in the 4
+  <sup>
+   th
+  </sup>
+  segment of the trace being sent from the host in MIT to gaia.cs.umass.edu (check the contents of the payload of this segment). You should observe that the text file is transmitted as multiple TCP segments (i.e. a single POST message has been split into several TCP segments) from the client to the server (gaia.cs.umass.edu). You should also see several TCP ACK segments been returned in the reverse direction.
+ </p>
+ <p>
+  <b>
+   IMPORTANT NOTE:
+  </b>
+  Do the sequence numbers for the sender and receiver start from zero? The reason for this is that Wireshark by default scales down all real sequence numbers such that the first segment in the trace file always starts from 0. To turn off this feature, you have to click Edit-&gt;Preferences&gt;Protocols-&gt;TCP (or Wireshark-&gt;Preferences-&gt;Protocols-&gt;TCP) and then disable the “Relative Sequence Numbers” option. Note that the answers in the solution set will reflect this change. If you conduct the experiment without this change, the sequence numbers that you observe will be different from the ones in the answers. Also, set the time shown in the 2nd column as the "Seconds since beginning of capture" under view-&gt;Time display format.
+ </p>
+ <p>
+  <a name="OLE_LINK6">
+  </a>
+  <i>
+   Question 1
+  </i>
+  . What is the IP address of gaia.cs.umass.edu? On what port number is it sending and receiving TCP segments for this connection? What is the IP address and TCP port number used by the client computer (source) that is transferring the file to gaia.cs.umass.edu?
+ </p>
+ <p>
+  <i>
+   Question 2.
+  </i>
+  What is the sequence number of the TCP segment containing the HTTP POST command? Note that in order to find the POST command, you’ll need to dig into the packet content field at the bottom of the Ethereal window, looking for a segment with a “POST” within its DATA field.
+  <br>
+ </p>
+ <p>
+  <i>
+   Question 3.
+  </i>
+  Consider the TCP segment containing the HTTP POST as the first segment in the TCP connection. What are the sequence numbers of the first six segments in the TCP connection (including the segment containing the HTTP POST) sent from the client to the web server (Do not consider the ACKs received from the server as part of these six segments)? At what time was each segment sent? When was the ACK for each segment received? Given the difference between when each TCP segment was sent, and when its acknowledgement was received, what is the RTT value for each of the six segments? What is the
+  <i>
+   EstimatedRTT
+  </i>
+  value (see relevant parts of Section 3.5 or lecture slides) after the receipt of each ACK? Assume that the initial value of
+  <i>
+   EstimatedRTT
+  </i>
+  is equal to the measured RTT (
+  <i>
+   SampleRTT
+  </i>
+  ) for the first segment, and then is computed using the
+  <i>
+   EstimatedRTT
+  </i>
+  equation for all subsequent segments. Set alpha to 0.125.
+ </p>
+ <p>
+  <b>
+   Note:
+  </b>
+  Wireshark has a nice feature that allows you to plot the RTT for each of the TCP segments sent. Select a TCP segment in the “listing of captured packets” window that is being sent from the client to the gaia.cs.umass.edu server. Then select:
+  <i>
+   Statistics-&gt;TCP Stream Graph&gt;Round Trip Time Graph
+  </i>
+  . However, do not use this graph to answer the above question.
+ </p>
+ <p>
+  <a name="OLE_LINK10">
+  </a>
+  <i>
+   Question 4.
+  </i>
+  What is the length of each of the first six TCP segments?
+ </p>
+ <p>
+  <i>
+   Question 5.
+  </i>
+  What is the minimum amount of available buffer space advertised at the receiver for the entire trace? Does the lack of receiver buffer space ever throttle the sender?
+ </p>
+ <p>
+  Question 6. Are there any retransmitted segments in the trace file? What did you check for (in the trace) in order to answer this question?
+ </p>
+ <p>
+  <i>
+   Question 7.
+  </i>
+  How much data does the receiver typically acknowledge in an ACK? Can you identify cases where the receiver is ACKing every other received segment (recall the discussion about delayed acks from the lecture notes or Section 3.5 of the text).
+ </p>
+ <p>
+  <i>
+   Question 8.
+  </i>
+  What is the throughput (bytes transferred per unit time) for the TCP connection? Explain how you calculated this value.
+ </p>
+ <h3>
+  Exercise 2: TCP Connection Management
+ </h3>
+ <p>
+  Consider the following TCP transaction between a client (10.9.16.201) and a server (10.99.6.175).
+ </p>
+ <p>
+  <img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Screen_Shot_2018-08-28_at_8.06.30_pm.png">
+ </p>
+ <p>
+  Answer the following questions:
+  <br>
+ </p>
+ <p>
+  <i>
+   Question 1
+  </i>
+  . What is the sequence number of the TCP SYN segment that is used to initiate the TCP connection between the client computer and server?
+ </p>
+ <p>
+  <i>
+   Question 2.
+  </i>
+  What is the sequence number of the SYNACK segment sent by the server to the client computer in reply to the SYN? What is the value of the Acknowledgement field in the SYNACK segment? How did the server determine that value?
+ </p>
+ <p>
+  <em>
+   Question 3
+  </em>
+  . What is the sequence number of the ACK segment sent by the client computer in response to the SYNACK? What is the value of the Acknowledgment field in this ACK segment? Does this segment contain any data?
+ </p>
+ <p>
+  <em>
+   Question 4
+  </em>
+  . Who has done the active close? client or the server? how you have determined this? What type of closure has been performed? 3 Segment (FIN/FINACK/ACK), 4 Segment (FIN/ACK/FIN/ACK) or Simultaneous close?
+ </p>
+ <p>
+  <em>
+   Question 5
+  </em>
+  . How many data bytes have been transferred from the client to the server and from the server to the client during the whole duration of the connection? What relationship does this have with the Initial Sequence Number and the final ACK received from the other side?
+ </p>
+ <h3>
+  Exercise 3: Getting familiarised with ns-2 simulator (not marked, do not include in your report)
+ </h3>
+ <p>
+  <strong>
+   IMPORTANT NOTE:
+  </strong>
+  ns-2 and Nam are installed on all CSE lab machines. We do not recommend that you install ns-2 on your personal machines. This is not as straightforward as installing wireshark. Moreover, the provided scripts have ONLY been tested on CSE machines and may not work on other operating systems. We cannot offer support for  running ns-2 natively on your local machines. It is possible to run ns-2 remotely via ssh.
+  <br>
+ </p>
+ <p>
+  <a href="http://www.isi.edu/nsnam/ns/" target="_blank">
+   ns-2
+  </a>
+  is a powerful simulator that provides substantial support for simulating TCP, routing and multicast protocols, among other things. It is capable of simulating the conditions that occur in wired or wireless networks. It is widely used in the research community and also in industry.
+ </p>
+ <p>
+  <span class="s2">
+   The simulator is written in C++. However, it uses OTcl as its command and configuration interface. In our lab exercises, we will use scripts written in OTcl. You will not be required to write any C++ code for any of the lab exercises. You will also not be required to write OTcl scripts from scratch. All scripts will be provided and at most ask you change a line or two in the scripts with proper instructions. To complete the lab exercises, you can safely assume ns-2 to be a black box. However, for those who are interested in finding out a bit more about ns-2, please refer to the following
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17316" target="_blank">
+    overview slides
+   </a>
+   which offers a good introduction.
+  </span>
+ </p>
+ <p>
+  We will also use a network animator tool:
+  <a href="http://www.isi.edu/nsnam/nam/" target="_blank">
+   <span class="s3">
+    Nam
+   </span>
+  </a>
+  . This allows us to visualise the topology and the transmission of packets during the experiments.
+  <br>
+ </p>
+ <p>
+  <b>
+   Illustrative Example: 2 nodes communicating directly over UDP
+  </b>
+ </p>
+ <p>
+  We will use this example to get acquainted with ns-2. The OTcl script for the first experiment is
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17308" target="_blank">
+   simpleSim.tcl
+  </a>
+  .  It creates two nodes and simulates the sending of data packets from one node to the other over UDP. The full explanation of the script can be found
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17315" target="_blank">
+   here.
+  </a>
+  <strong>
+   We strongly recommend
+  </strong>
+  you read through it as it will be helpful for you for future exercises. It doesn't go over all details but rather gives you an overview of how to setup a topology, create traffic and run an experiment.
+ </p>
+ <p>
+  You can run the script by typing the following command:
+ </p>
+ <pre>$ ns simpleSim.tcl</pre>
+ <p>
+  This will start the nam tool and you will see the
+  <a href="http://www.isi.edu/nsnam/ns/tutorial/nsbasic.html#nam" target="_blank">
+   nam window
+  </a>
+  . When you click on the 'play' button in the window, you will see that after 0.5 seconds of simulated time, node 0 starts sending data packets to node 1. The transmission stops at t = 1.5 seconds and the simulation stops at time t = 2 seconds. You might want to slow nam down by using the 'Step' slider at the top right.
+ </p>
+ <p>
+  Once the experiment has concluded close nam. You will find an output trace file named 'out.tr' in your current directory. The format is as follows:
+ </p>
+ <pre>event time src dest PktType PktSize Flags Fid SrcSddr DestAddr SeqNum PktId</pre>
+ <p>
+  where:
+ </p>
+ <ul>
+  <li>
+   event:
+   <ul>
+    <li>
+     <span class="s3">
+      r:
+     </span>
+     receive at dest
+    </li>
+    <li>
+     <span class="s3">
+      +:
+     </span>
+     enqueue
+    </li>
+    <li>
+     <span class="s3">
+      -:
+     </span>
+     dequeue
+    </li>
+    <li>
+     <span class="s3">
+      d:
+     </span>
+     drop
+    </li>
+   </ul>
+  </li>
+ </ul>
+ <ul>
+  <li>
+   ScrAddr and DestAddr
+   <span class="s4">
+    :
+   </span>
+   <ul>
+    <li>
+     <span class="s3">
+      node.port
+     </span>
+     (e.g.,
+     <span class="s3">
+      0.1
+     </span>
+     means node
+     <span class="s3">
+      0
+     </span>
+     , port
+     <span class="s3">
+      1
+     </span>
+     )
+    </li>
+   </ul>
+  </li>
+ </ul>
+ <p>
+  Example trace:
+ </p>
+ <pre>r 0.519 0 1 cbr 500 ------- 0 0.0 1.0 1 1
++ 0.52  0 1 cbr 500 ------- 0 0.0 1.0 4 4
+- 0.52  0 1 cbr 500 ------- 0 0.0 1.0 4 4
+</pre>
+ <p>
+  You may wish to examine out.tr to get a better understanding of what happens in the experiment.
+ </p>
+ <p>
+  We will use ns-2 in the next lab to run some experiments with TCP flows.
+ </p>
+            <div class="clearfix">
+              <p class="pull-left"><small>Resource created <abbr class="timeago" title="Monday 16 July 2018, 02:50:39 PM">2 months ago</abbr>, last modified <abbr class="timeago" title="Monday 03 September 2018, 01:10:41 PM">3 days ago</abbr>.</small></p>
+            </div>
+
+
+    <div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title">
+      Comments
+      <div role="group" class="btn-group btn-group-xs pull-right comment-frame-header"><a title="Click to Subscribe" class="btn btn-default btn-xs"><i class="fa fa-bookmark-o"></i></a> <a title="Search" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/search?forum_choice=resource/17355" class="btn btn-default btn-xs"><i class="fa fa-search"></i></a> <a title="Forum View" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/resource/17355" class="btn btn-default btn-xs"><i class="fa fa-comments"></i></a></div></h3></div> <div class="panel-body"><!----> <div style="position: relative;"><i class="fa fa-fw fa-comment-o" style="position: absolute; padding: 10px; color: rgb(153, 153, 153);"></i> <input type="text" placeholder="Add a comment" class="form-control" style="padding-left: 30px;"></div> <!----> <hr> <ul class="comment-wrapper"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5190588">Kavitha Narayanan</a><small><span><abbr title="Wed Sep 05 2018 12:57:54 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  For the third question in Exercise 1, "When was the ACK for each segment received?" and calculate the RTT.Segment 4 and 5 from the client receives a cumulative ACK from the destination through segment 6(Please correct if my understanding is wrong),so in this case, to calculate RTT do we take the time for segment 6 for both segment 4 and 5 .?Pls clarify
+ </p>
+ &lt;colgroup&gt;&lt;col&gt; &lt;col&gt; &lt;col&gt; &lt;col&gt; &lt;col&gt; &lt;col&gt; &lt;/colgroup&gt;
+ <table>
+  <tbody>
+   <tr>
+    <td>
+     4
+    </td>
+    <td>
+     0.026477
+    </td>
+    <td>
+     192.168.1.102
+    </td>
+    <td>
+     128.119.245.12
+    </td>
+    <td>
+     HTTP
+    </td>
+    <td>
+     619
+    </td>
+    <td>
+     POST /ethereal-labs/lab3-1-reply.htm HTTP/1.1
+    </td>
+   </tr>
+   <tr>
+    <td>
+     5
+    </td>
+    <td>
+     0.041737
+    </td>
+    <td>
+     192.168.1.102
+    </td>
+    <td>
+     128.119.245.12
+    </td>
+    <td>
+     HTTP
+    </td>
+    <td>
+     1514
+    </td>
+    <td>
+     Continuation
+    </td>
+   </tr>
+   <tr>
+    <td>
+     6
+    </td>
+    <td>
+     0.053937
+    </td>
+    <td>
+     128.119.245.12
+    </td>
+    <td>
+     192.168.1.102
+    </td>
+    <td>
+     TCP
+    </td>
+    <td>
+     60
+    </td>
+    <td>
+     80 &gt; 1161 [ACK] Seq=883061786 Ack=232129578 Win=6780 Len=0
+    </td>
+   </tr>
+  </tbody>
+ </table></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Tue Sep 04 2018 22:22:04 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr>, last modified <abbr title="Tue Sep 04 2018 22:34:27 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr></span></small></header> <div class="comment-body"> <p>
+  <img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Screen_Shot_2018-09-04_at_10.19.53_pm.png">
+ </p>
+ <p>
+  <br>
+ </p>
+ <p>
+  I followed all the instruction to set Wireshark. and I got the 4th segment like this. It didn't show that POST mentioned in the instruction. Am I on the right track? or something wrong?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Wed Sep 05 2018 09:03:52 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  You need to check the content of the packet
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/WechatIMG164.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5142286">Bojing Fu</a><small><span><abbr title="Tue Sep 04 2018 23:01:30 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  My wireshark shows like this, my No4 segment shows that it is a HTTP(POST) request instead of TCP.
+ </p>
+ <p>
+  <img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/2018-09-04_22.57.57.png">
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Tue Sep 04 2018 23:04:39 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  For Q3 in Ex1, I use the No199 showing in blue to answer the question so I got different answer with you. I thing we are something different of the Wireshark sorting. This does make some different to answer Q2 and Q3.
+ </p>
+ <p>
+  <img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Screen_Shot_2018-09-04_at_11.02.29_pm.png">
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Wed Sep 05 2018 09:05:59 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  That is not the correct one to use. Check my comment above.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5022909">Samuel Hernandez Romero</a><small><span><abbr title="Tue Sep 04 2018 22:52:32 GMT+1000 (澳大利亚东部标准时间)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Can you see 'Dp....PO ST /ethe' in the next line (0030) ?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5085255">Ramal Ratnayake</a><small><span><abbr title="Tue Sep 04 2018 11:22:37 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  In exercise 1 q4, it asks for the size of each packet. Could someone clarify the difference between the two fields in Wireshark (marked on picture below)?
+ </p>
+ <p>
+  Thanks
+ </p>
+ <p>
+  <img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Capture.png">
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5085255">Ramal Ratnayake</a><small><span><abbr title="Tue Sep 04 2018 17:26:56 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Thank you to both of you! Makes sense now
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Tue Sep 04 2018 16:44:53 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  As the LIC mentioned, the left side length is the total size of the packet including the headers and the right one is the size of the data.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar_lecturer.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a><small><span><abbr title="Tue Sep 04 2018 14:15:43 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Information is not complete from this screenshot. Look at the length at various layers of the TCP/IP stack. Len=0 means zero payload for TCP (only TCP headers. How much is the header length? you have to look at details by clicking the TCP layer). Similarly seems like the IP header is using options in header as well. Do some accounting and your total length of frame shown on left should match up with all headers added together.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5165168">Amir Harambasic</a><small><span><abbr title="Tue Sep 04 2018 02:43:35 GMT+1000 (澳大利亚东部标准时间)">3 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  For Part 1
+  <i>
+   Question 4.
+  </i>
+  What is the length of each of the first six TCP segments?
+ </p>
+ <p>
+  Does this refer to the first 6 segments overall from both sides or the first 6 segments after post as from the previous question.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar_lecturer.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3003139">Nadeem Ahmed</a><small><span><abbr title="Tue Sep 04 2018 07:15:40 GMT+1000 (澳大利亚东部标准时间)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  First 6 Segments from Question 3.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/smartisan_lockscreen_2.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5172023">Jialun Li</a><small><span><abbr title="Sun Sep 02 2018 13:19:54 GMT+1000 (澳大利亚东部标准时间)">4 days ago</abbr>, last modified <abbr title="Sun Sep 02 2018 14:43:25 GMT+1000 (澳大利亚东部标准时间)">4 days ago</abbr></span></small></header> <div class="comment-body"> <p>
+  [deleted]
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sun Sep 02 2018 14:20:36 GMT+1000 (澳大利亚东部标准时间)">4 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  To find the segment that contains POST, check the content of each segment, You will see a POST in the message content.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5075490">Abanob Tawfik</a><small><span><abbr title="Sat Sep 01 2018 21:13:36 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> for question 3, do we consider the acks that the server is sending back to the client as part of the segment? or is it purely the psh ack segments?
+</div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Sep 01 2018 22:13:49 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Can you clarify which question you exactly mean? q3 in exercise 1 or 2?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5075490">Abanob Tawfik</a><small><span><abbr title="Sat Sep 01 2018 22:29:37 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  in exercise 1
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Sep 01 2018 23:29:22 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  To answer the question you need to check the time of the ACK
+  <strong>
+   packets
+  </strong>
+  sent from the server to the client.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5189803">Dongdong Chen</a><small><span><abbr title="Sat Sep 01 2018 15:39:34 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Dear Ali,
+ </p>
+ <p>
+  To turn off this feature, you have to click Edit-&gt;Preferences&gt;Protocols-&gt;TCP (or Wireshark-&gt;Preferences-&gt;Protocols-&gt;TCP) and then disable the “Relative Sequence Numbers” option. Note that the answers in the solution set will reflect this change.
+  <br>
+ </p>
+ <p>
+  Does that mean that we have to turn off this option, using the real sequence numbers to answer those questions?
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Sep 01 2018 19:16:24 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Yes, in other words it must not start with 0.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5189803">Dongdong Chen</a><small><span><abbr title="Sat Sep 01 2018 20:35:51 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Thank you.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5114185">Mohamed Al Mouiee</a><small><span><abbr title="Sat Sep 01 2018 17:45:09 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Do not use relative sequence numbers, so uncheck the "relative sequence numbers" box, if it's on by default.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5189803">Dongdong Chen</a><small><span><abbr title="Sat Sep 01 2018 20:36:01 GMT+1000 (澳大利亚东部标准时间)">5 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Thank you.
+ </p></div> <footer><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li></ul> <!----> <!----> <!----></div></div>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="row hidden-print">
+        <div class="col-sm-12">
+          <hr>
+          <p class="pull-right"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17355#webcms3top">Back to top <i class="fa fa-caret-up"></i></a></p>
+          <div class="pull-left">
+
+          <strong>COMP3331/COMP9331 18s2 (Computer Networks and Applications)</strong>
+          is powered by <a href="https://webcms3.cse.unsw.edu.au/about">WebCMS3</a>
+          <h6><small>CRICOS Provider No. 00098G</small></h6>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/manifest.d734b08273f336355ed0.js"></script>
+    <script src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/vendor.ada5e1585a0b4a3d8330.js"></script>
+    <script src="./Lab Exercise 4_ Exploring TCP _ COMP3331 18s2 _ WebCMS3_files/app.cc304414bf40f92c3c7d.js"></script>
+
+
+
+<script>
+
+webcms.renderComments("#messaging-wrapper", {
+    object_type: 'resource',
+    object_id: 17355,
+    url: '/messages/',
+    course: '3147',
+});
+
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete-heading"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+      bootbox.dialog({
+        message: "Are you sure you wish to delete this resource heading?",
+        buttons: {
+          main: {
+            label: "No",
+            className: "btn-default",
+            callback: function() { }
+          },
+          children: {
+            label: "Yes, and delete all children too",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location + "?children=1");
+            }
+          },
+          just: {
+            label: "Yes, and move children to parent",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location);
+            }
+          }
+        }
+      });
+    });
+  });
+
+});
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+
+      bootbox.confirm("Are you sure you wish to delete this resource?", function(confirmed) {
+        if (confirmed) {
+          window.location.replace(location);
+        }
+      });
+    });
+  });
+});
+</script>
+
+
+
+    <script>
+      jQuery.timeago.settings.allowFuture = true;
+
+      $(function() {
+        $('*[id^="redactor"]').each(function () {
+          $(this).redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+
+        });
+          $('.redactor').redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+      });
+
+      $(document).ready(function() {
+        $('[data-toggle=buttons]').click(function() {
+          // Hack to get toolbar to show
+          setTimeout(function() {$('.redactor').scroll()}, 0)
+        });
+      });
+
+    </script>
+    <script>
+        $(document).on('change', '.btn-file :file', function() {
+          var input = $(this),
+              numFiles = input.get(0).files ? input.get(0).files.length : 1,
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+          input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready( function() {
+            $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+            });
+        });
+
+      $('[data-toggle="popover"]').popover();
+    </script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+      });
+
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $(document).ready(function() {
+        $('[data-toggle=offcanvas]').click(function() {
+          $('.row-offcanvas').toggleClass('active');
+        });
+      });
+    </script>
+
+
+
+
+  
+</div></body></html>

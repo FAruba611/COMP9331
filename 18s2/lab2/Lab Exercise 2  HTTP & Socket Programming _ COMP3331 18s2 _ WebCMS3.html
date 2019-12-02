@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="1533396111##96096991663d8bec145b8724ed7bb03d31cdd4ba">
+    <title>Lab Exercise 2: HTTP &amp; Socket Programming |  COMP3331 18s2 | WebCMS3</title>
+
+    <link rel="icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://webcms3.cse.unsw.edu.au/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" id="theme" href="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/lightblue.css">
+
+
+  <style type="text/css"></style><style type="text/css">.select-box{position:absolute;border:1px solid #ddd;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);background:#fff;z-index:1000}.mention{text-decoration:none!important;color:#000!important;background-color:#dce6f8;padding:0;margin-right:.5em}.user-select{list-style-type:none;list-style:none;margin:0;padding:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}.user-select li{display:block;padding:5px 10px;font-weight:600;cursor:pointer;border-bottom:1px solid #ddd}.user-select li small{font-weight:400;color:#767676}.user-select .selected small{color:#fff}.user-select .selected{background-color:#4078c0;color:#fff}</style></head>
+  <body role="document" id="webcms3top">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://webcms3.cse.unsw.edu.au/">WebCMS3</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Computer Networks and Applications">COMP9331</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9313/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Big Data Management">COMP9313</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9319/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Web Data Compression and Search">COMP9319</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9418/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Advanced Topics In Statistical Machine Learning">COMP9418</a></li>
+                <li><a href="https://webcms3.cse.unsw.edu.au/COMP9900/18s2/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Information Technology Project">COMP9900</a></li>
+
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://webcms3.cse.unsw.edu.au/search" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Search Courses"><i class="fa fa-search"></i></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <div class="nav-profile-mask">
+                    <img class="profile_picture" src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png">
+                  </div>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858"><i class="fa fa-user"></i> Profile</a></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/users/z5137858/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="https://webcms3.cse.unsw.edu.au/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-left">
+          <div class="col-sm-3 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar hidden-print">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h4 class="panel-title"><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">COMP9331</a> <small>18s2</small></h4>
+    </div>
+
+  </div>
+
+  <ul class="list-group">
+            <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/">Home</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/outline">Course Outline</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="#side-menu3" data-toggle="collapse" data-parent=".sidebar">
+            Course Work <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse in" id="side-menu3">
+                  <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17194">Lectures</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17330">Echo 360 Lecture Recordings</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17329">Labs</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17289">Assignment</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17331">Mid-session Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17336">Final Exam</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17360">Homework Questions</a>
+        </li>
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/">Forums</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/timetable">Timetable</a>
+        </li>        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/groups/">Groups</a>
+        </li>
+        <li class="list-group-item ">
+          <a href="#side-menu7" data-toggle="collapse" data-parent=".sidebar">
+            Staff <span class="caret"></span>
+          </a>
+        </li>
+        <ul class="list-group collapse" id="side-menu7">
+          
+
+                     <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z1058484">Nadeem Ahmed</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a>
+    <span class="label label-primary">Course Admin</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3004991">Mahbub Hassan</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3116703">Salil Kanhere</a>
+    <span class="label label-primary">Lecturer</span>
+  </li>
+
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5042615">Luke Yuan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5036620">Weineng He</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3331774">Phuoc Tran</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5031977">Najmul Hassan</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5095709">Finbars Chuka Oham</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5088051">Phoebe Zhou</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5019176">Mathew Vo</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5129195">Yi Xiao</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059988">Costa Paraskevopoulos</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5109199">Marjan Moradi</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5130887">Sijun Zhu</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z3202491">Sidra Malik</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5175209">Nipuna Shanthidewa</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+        <li class="list-group-item">
+    <a href="https://webcms3.cse.unsw.edu.au/users/z5059444">Weilon Ying</a>
+    <span class="label label-default">Tutor</span>
+  </li>
+
+
+        </ul>
+        <li class="list-group-item ">
+          <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/activities/">Activities</a>
+        </li>
+
+
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-footer">
+
+      <div class="pull-right"> 
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/users/grades" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Grades"><i class="fa fa-bar-chart"></i></a>
+        <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/blogs/" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Blog"><i class="fa fa-comment"></i></a>
+      </div>
+      Changfeng Li<br>
+      <small>Student</small>
+    </div>
+  </div>
+  
+</div>
+          </div>
+          <div class="col-sm-9 col-md-9 main">
+            <p class="visible-xs hidden-print">
+              <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i> Toggle Menu</button>
+            </p>
+<ol class="breadcrumb">
+  <li>Resources</li>
+
+  <li><a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17340">Lab Exercises</a></li>
+
+  <li class="active">Lab Exercise 2: HTTP &amp; Socket Programming</li>
+</ol>
+<div class="page-header with-breadcrumb">
+  <h1 style="display:inline;">Lab Exercise 2: HTTP &amp; Socket Programming</h1> 
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+     <div class="clearfix">
+
+
+    </div>
+  
+    <br>
+
+
+
+             <h3 style="">
+  <br>
+ </h3>
+ <h3 style="">
+ </h3>
+ <table class="table">
+  <tbody>
+   <tr>
+    <td style="text-align: center;">
+     <span style="font-size: 20px;">
+      <b>
+       There are 7 labs during this course. For each student, the 5 best performing labs will contribute to your final lab mark.
+      </b>
+     </span>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <span style="font-size: 20px;">
+ </span>
+ <strong>
+  <span style="font-size: 20px;">
+   Objectives:
+  </span>
+ </strong>
+ <strong>
+  <span style="font-size: 20px;">
+  </span>
+ </strong>
+ <ul>
+  <li>
+   Gain insights into operation of HTTP
+  </li>
+  <li>
+   Get familiar with the basic socket programming
+  </li>
+  <li>
+   Preparation for programming assignment
+  </li>
+ </ul>
+ <h3 style="">
+  Prerequisites:
+ </h3>
+ <ul>
+  <li>
+   Week 2 &amp; 3 Lectures
+  </li>
+  <li>
+   Relevant Parts of Chapter 2 of the textbook (Socket Programming)
+  </li>
+  <li>
+   Basic understanding of Linux. A good resource is
+   <a href="http://www.ee.surrey.ac.uk/Teaching/Unix/">
+    here
+   </a>
+   but there are several other resources online
+  </li>
+  <li>
+   Several socket programming resources and sample codes for all 3 programming languages are available at
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17240">
+    this page
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17309">
+    PingServer.java
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17313">
+    http-ethereal-trace-1
+   </a>
+  </li>
+  <li>
+   <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17311">
+    http-ethereal-trace-2
+   </a>
+  </li>
+ </ul>
+ <h3 style="">
+  Marks: 10 marks
+ </h3>
+ <ul>
+  <li>
+   This lab requires submission (5 Marks) as well as demonstration (5 Marks)
+  </li>
+  <li>
+   Please attend the lab in your allocated lab time slot.
+  </li>
+  <li>
+   This lab comprises of a number of exercises. Pl note that not all the
+ exercises for this lab are marked. You have to submit a report 
+containing answers to selected exercises only.
+  </li>
+  <li>
+   We expect the students to go through as much of the lab exercises as 
+they can at home and come to the lab for clarifying any doubts in 
+procedure/specifications.
+  </li>
+  <li>
+   Exercise 5 marked with (*) is to be demonstrated in the lab to the tutor for marking purpose.
+  </li>
+  <li>
+   Please attend your allocated lab and show/explain the answers of the marked exercises to your tutor.
+  </li>
+  <li>
+   If lab exercise involves diagrams or plots, you require to show them to the tutor as well.
+  </li>
+  <li>
+   Please make sure you
+   <b>
+    sign the marking form
+   </b>
+   once the tutor marked your lab. Signing this form implies that you agreed on the mark you received.
+  </li>
+ </ul>
+ <h3 style="">
+  Deadline:
+ </h3>
+ <p style="">
+  <em>
+   Demonstration:
+  </em>
+  You need to attend the lab for demonstration on your allocated lab 
+slot. Please note that there would not be any retake available if you 
+miss your lab slot. This means you will be awarded ZERO for the 
+demonstration component of the lab (5 marks).
+ </p>
+ <p style="">
+  <em>
+   Report Submission:
+  </em>
+  <em>
+   Midnight of Friday 10th August 2018.
+  </em>
+  You can submit as many times as you wish before the deadline. A later 
+submission will override the earlier submission, so make sure you submit
+ the correct file. Do not leave until the last moment to submit, as 
+there may be technical or communications error and you will not have 
+time to rectify it.
+ </p>
+ <h3 style="">
+  Late Report Submission Penalty:
+ </h3>
+ <p style="">
+  Late penalty will be applied as follows:
+ </p>
+ <ul>
+  <li>
+   1 day after deadline: 20% reduction
+  </li>
+  <li>
+   2 days after deadline: 40% reduction
+  </li>
+  <li>
+   3 days after deadline: 60% reduction
+  </li>
+  <li>
+   4 or more days late: NOT accepted
+  </li>
+ </ul>
+ <p style="">
+  Note that the above penalty is applied to your final mark in report. 
+For example, if you submit your lab report 2 days late and your score on
+ the lab is 4, then your final mark will be 4 - 1.6 (40% penalty) = 2.4.
+ </p>
+ <h3 style="">
+  Submission Instructions:
+  <br>
+ </h3>
+ <p style="">
+  Submit a PDF document lab2.pdf with answers to Exercises 3, 4 and 5. 
+Your client should be named PingClient.c or PingClient.java or 
+PingClient.py. Create a tar archive of all the files (e.g. if you have 
+additional header or helper files) called
+  <strong>
+   lab2.tar
+  </strong>
+  . Submit the archive using give. You can submit from a lab machine or 
+ssh into the CSE login server. Instructions to ssh into CSE login 
+servers are
+  <a href="https://taggi.cse.unsw.edu.au/FAQ/Logging_In_With_SSH/">
+   here
+  </a>
+  . Max file size for submission is
+  <strong>
+   3MB
+  </strong>
+  . The submission system will also accept a PDF called lab2.pdf. So, if
+ you only have a PDF file, you can submit is directly ( no need to tar).
+ </p>
+ <p style="">
+  <strong>
+   IMPORTANT: IF YOU ARE USING PYTHON THEN PLEASE ADD A COMMENT AT THE 
+TOP OF YOUR CODE TO INDICATE THE CORRECT VERSION OF PYTHON. THIS WILL 
+ALLOW US TO USE THIS VERSION OF PYTHON FOR TESTING YOUR CODE.
+  </strong>
+ </p>
+ <h3 style="">
+  Original Work Only:
+ </h3>
+ <p style="">
+  You are strongly encouraged to discuss the questions with other 
+students in your lab. However, each student must submit his or her own 
+work. You may need to refer to the material indicated above 
+(particularly socket programming links) and also conduct your own 
+research to answer the questions.
+ </p>
+ <h3>
+  System Compatibility (Very Important):
+ </h3>
+ <p>
+  We will test your code on CSE machines via the command line interface. Note that CSE machines support the following:
+  <strong>
+   gcc version 4.9.2, Java 1.8, Python 2.7, 2.8 and 3.
+  </strong>
+  It is thus imperative that you test your code on CSE machines before 
+submitting. This is particularly important if you write your code on 
+your own machine and use an IDE. You MUST test your code on CSE machines
+ (via command line) before submitting. If we cannot get your code to 
+work on CSE machines, then we can't mark it and unfortunately you won't 
+receive any marks. This point is also relevant for the assignment.
+ </p>
+ <h2>
+  Exercise 1:
+  <b>
+   Using Telnet to interact with a Web Server (Unmarked, not to be included in report)
+  </b>
+ </h2>
+ <p>
+  Follow the steps described below. You will notice certain questions as
+ you attempt the exercise. Write down the answers and discuss them with 
+your lab partner to enable him/her to assess your performance. If you 
+have any questions or are experiencing difficulty with executing the lab
+ please consult your tutor.
+ </p>
+ <p>
+  <b>
+   Step 1:
+  </b>
+  Open an
+  <i>
+   xterm
+  </i>
+  window. Enlarge the size of your
+  <i>
+   xterm
+  </i>
+  window so that it is reasonably large and covers almost the entire screen.
+ </p>
+ <p>
+  <b>
+   Step 2:
+  </b>
+  Telnet to the vision.ucla.edu web server by typing:
+ </p>
+ <p>
+  $ telnet vision.ucla.edu 80
+ </p>
+ <p>
+  Note that the port number for all web servers is “80”.
+ </p>
+ <p>
+  <b>
+   Step 3:
+  </b>
+  Retrieve the main webpage by typing:
+ </p>
+ <p>
+  GET / HTTP/1.1
+ </p>
+ <p>
+  host:
+  <a href="http://www.vision.ucla.edu/">
+   www.vision.ucla.edu
+  </a>
+ </p>
+ <p>
+  <b>
+   Important Note
+  </b>
+  : You will have to press the carriage return twice after typing the last line.
+ </p>
+ <p>
+  Question 1: What is the content type of the response? What is the size
+ of the response? When was the webpage last modified? Do you see an 
+"Accept-Ranges" header field? What may this be used for?
+ </p>
+ <p>
+  <b>
+   Step 4:
+  </b>
+  Now execute the HEAD method. When a server receives a request with the
+ HEAD method, it responds with only the message header lines (i.e. the 
+response to the GET method minus the actual requested object).
+ </p>
+ <p>
+  HEAD / HTTP/1.1
+ </p>
+ <p>
+  host:
+  <a href="http://www.vision.ucla.edu/">
+   www.vision.ucla.edu
+  </a>
+ </p>
+ <p>
+  Question 2: What is the content type of the response? What is the size of the response?
+ </p>
+ <p>
+  Question 3:
+  <i>
+  </i>
+  Using telnet, find a way to get the people.html webpage from vision.ucla.edu
+ </p>
+ <p>
+  Question 4: Why is there the need to include the host in the GET (and HEAD) HTTP 1.1 request messages?
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 24px;">
+    Exercise 2: Understanding Internet Cookies (unmarked, not to be included in the report)
+   </span>
+  </b>
+ </p>
+ <p>
+  Question 1. Repeat steps 1-3 in the previous experiment for
+  <a href="http://www.google.com.au/">
+   www.google.com.au
+  </a>
+  . Does the site set a cookie in your browser? How can you tell by 
+purely examining the HTTP response message received using telnet? How 
+about www.vision.ucla.edu? Do you think this site will set a cookie in 
+your browser?
+  <b>
+  </b>
+ </p>
+ <p>
+  Question 2. Open a web browser (Firefox/IceWeasel/Mozilla preferred). 
+Go to the browser preferences and remove all existing cookies. Open the 
+google webpage and then view the cookies. How many cookies are stored on
+ your machine? Which sites installed the cookies?
+ </p>
+ <p>
+  Question 3. Repeat the above steps for the vision.ucla.edu website. 
+How many cookies are stored on your machine? Which sites installed the 
+cookies? Is the answer inconsistent with the answer for Question 1? 
+Explain why.
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 24px;">
+    Exercise 3: Using Wireshark to understand basic HTTP request/response messages (marked, include in your report)
+   </span>
+  </b>
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 24px;">
+   </span>
+  </b>
+  We will not be running Wireshark on a live network connection (You are
+ strongly encouraged to try this on your own machine. Pointers provided 
+at the end of this exercise). The CSE network administrators do not 
+permit live traffic monitoring for security reasons. Instead, for all 
+our lab exercises we will make use of several trace files, which were 
+collected by running Wireshark by one of the textbook’s authors. For 
+this particular experiment download the following trace file:
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17313">
+   http-ethereal-trace-1
+  </a>
+ </p>
+ <table class="table">
+  <tbody>
+   <tr>
+    <td>
+     <strong>
+      NOTE: IT IS NOT POSSIBLE TO RUN WIRESHARK VIA SSH. IT IS A 
+RESOURCE INTENSIVE PROGRAM AND IT WOULD SLOW DOWN THE CSE LOGIN SERVERS.
+ IF YOU WANT TO WORK REMOTELY, THEN YOU CAN DOWNLOAD AND INSTALL
+     </strong>
+     <a href="https://www.wireshark.org/download.html" target="_blank">
+      <b>
+       WIRESHARK
+      </b>
+     </a>
+     <strong>
+      ON YOUR PERSONAL MACHINE. WIRESHARK IS AVAILABLE ON ALL LAB MACHINES.
+     </strong>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <p>
+  The following indicate the steps involved:
+ </p>
+ <p>
+  <strong>
+   Step 1:
+  </strong>
+  Start Wireshark by typing
+  <em>
+   wireshark
+  </em>
+  at the command prompt.
+ </p>
+ <p>
+  <strong>
+   Step 2:
+  </strong>
+  Load the trace file
+  <em>
+   http-ethereal-trace-1
+  </em>
+  by using the
+  <em>
+   File
+  </em>
+  pull down menu, choosing
+  <em>
+   Open
+  </em>
+  and selecting the appropriate trace file. This trace file captures a 
+simple request/response interaction between a browser and a web server.
+ </p>
+ <p>
+  <strong>
+   Step 3:
+  </strong>
+  You will see a large number of packets in the packet-listing window. 
+Since we are currently only interested in HTTP we will filter out all 
+the other packets by typing “http” in lower-case in the
+  <em>
+   Filter
+  </em>
+  field and press Enter. You should now see only HTTP packets in the packet-listing window.
+ </p>
+ <p>
+  <strong>
+   Step 4:
+  </strong>
+  Select the first HTTP message in the packet-listing window and observe
+ the data in the packet-header detail window. Recall that since each 
+HTTP message was carried inside a TCP segment, which was carried inside 
+an IP datagram, which was carried within an Ethernet frame, Wireshark 
+displays the Frame, Ethernet, IP, and TCP packet information as well. We
+ want to minimize the amount of non-HTTP data displayed (we’re 
+interested in HTTP here, and will be investigating these other protocols
+ is later labs), so make sure the boxes at the far left of the Frame, 
+Ethernet, IP and TCP information have a right-pointing arrowhead (which 
+means there is hidden, undisplayed information), and the HTTP line has a
+ down-pointing arrowhead (which means that all information about the 
+HTTP message is displayed).
+ </p>
+ <p>
+  <strong>
+   NOTE:
+  </strong>
+  Please neglect the HTTP GET and response for favicon.ico, (the third 
+and fourth HTTP messages in the trace file. Most browsers automatically 
+ask the server if the server has a small icon file that should be 
+displayed next to the displayed URL in the browser. We will ignore 
+references to this pesky file in this lab.)
+ </p>
+ <p>
+  By looking at the information in the HTTP GET and response messages (the first two messages), answer the following questions:
+ </p>
+ <p>
+  Question 1: What is the status code and phrase returned from the server to the client browser?
+ </p>
+ <p>
+  Question 2: When was the HTML file that the browser is retrieving last
+ modified at the server? Does the response also contain a DATE header? 
+How are these two fields different?
+ </p>
+ <p>
+  Question 3: Is the connection established between the browser and the 
+server persistent or non-persistent? How can you infer this?
+ </p>
+ <p>
+  Question 4: How many bytes of content are being returned to the browser?
+ </p>
+ <p>
+  Question 5: What is the data contained inside the HTTP response packet?
+ </p>
+ <p>
+  <img>
+  <strong>
+   Note:
+  </strong>
+  Students are strongly encouraged to use wireshark to capture real network traffic on their own machines. Check
+  <a href="https://www.wireshark.org/download.html" target="_top">
+   https://www.wireshark.org/download.html
+  </a>
+  for details. Once you have wireshark installed, do the following. 
+Clear the cache of your web browser (Firefox-&gt;Tools-&gt;Clear Recent 
+History). Launch the wireshark tool by typing wireshark in the command 
+line. Start wireshark capture by clicking on: capture -&gt; interfaces 
+-&gt; click Start on the interface eth0. Run the Web browser and enter 
+an url for a website (e.g.
+  <a href="http://www.bbc.co.uk/">
+   www.bbc.co.uk
+  </a>
+  ). Stop capturing packets when the web page is fully loaded. Examine the captured trace and answer the questions as above.
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 24px;">
+    Exercise 4: Using Wireshark to understand the HTTP CONDITIONAL GET/response interaction (marked, include in your report)
+   </span>
+  </b>
+ </p>
+ <p>
+  <b>
+   <span style="font-size: 24px;">
+   </span>
+  </b>
+  For this particular experiment download the second trace file:
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17311">
+   http-ethereal-trace-2
+  </a>
+ </p>
+ <p>
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17311">
+  </a>
+  The following indicate the steps for this experiment:
+ </p>
+ <p>
+  <strong>
+   Step 1:
+  </strong>
+  Start Wireshark by typing
+  <em>
+   wireshark
+  </em>
+  at the command prompt.
+ </p>
+ <p>
+  <strong>
+   Step 2:
+  </strong>
+  Load the trace file
+  <em>
+   http-ethereal-trace-2
+  </em>
+  by using the
+  <em>
+   File
+  </em>
+  pull down menu, choosing
+  <em>
+   Open
+  </em>
+  and selecting the appropriate trace file. This trace file captures a 
+request response between a client browser and web server where the 
+client requests the same file from the server within a span of a few 
+seconds.
+ </p>
+ <p>
+  <strong>
+   Step 3:
+  </strong>
+  Filter out all the non-HTTP packets and focus on the HTTP header information in the packet-header detail window.
+ </p>
+ <p>
+  By looking at the information in the HTTP GET and response messages (the first two messages), answer the following questions:
+ </p>
+ <p>
+  Question 1: Inspect the contents of the first HTTP GET request from 
+the browser to the server. Do you see an “IF-MODIFIED-SINCE” line in the
+ HTTP GET?
+ </p>
+ <p>
+  Question 2: Does the response indicate the last time that the requested file was modified?
+ </p>
+ <p>
+  Question 3: Now inspect the contents of the second HTTP GET request 
+from the browser to the server. Do you see an “IF-MODIFIED-SINCE:” and 
+“IF-NONE-MATCH” lines in the HTTP GET? If so, what information is 
+contained in these header lines?
+ </p>
+ <p>
+  Question 4: What is the HTTP status code and phrase returned from the 
+server in response to this second HTTP GET? Did the server explicitly 
+return the contents of the file? Explain.
+ </p>
+ <p>
+  <img>
+  Question 5: What is the value of the Etag field in the 2nd response 
+message and how it is used? Has this value changed since the 1
+  <sup>
+   st
+  </sup>
+  response message was received?
+ </p>
+ <h2>
+  (*) Exercise 5: Ping Client
+ </h2>
+ <p>
+  <strong>
+   <span style="font-size: 20px;">
+    Note: This exercise is to be included in the report and demonstrated to the tutor during your lab.
+   </span>
+  </strong>
+ </p>
+ <p style="text-align: justify;">
+  In this exercise, you will study a simple Internet ping server 
+(written in Java), and implement a corresponding client. The 
+functionality provided by these programs are similar to the standard 
+ping programs available in modern operating systems, except that they 
+use UDP rather than Internet Control Message Protocol (ICMP) to 
+communicate with each other. Note that, we will study ICMP later in the 
+course. (Most programming languages do not provide a straightforward 
+means to interact with ICMP)
+ </p>
+ <p style="text-align: justify;">
+  The ping protocol allows a client machine to send a packet of data to a
+ remote machine and have the remote machine return the data back to the 
+client unchanged (an action referred to as echoing). Among other uses, 
+the ping protocol allows hosts to determine round-trip times to other 
+machines.
+ </p>
+ <p>
+  <b>
+   Ping Server (provided)
+  </b>
+ </p>
+ <p>
+  You are given the complete code for the Ping server:
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17309">
+   PingServer.java.
+  </a>
+  The server sits in an infinite loop listening for incoming UDP 
+packets. When a packet comes in, the server simply sends the 
+encapsulated data back to the client.
+ </p>
+ <p>
+  Your task is to write the corresponding Ping client. You can use 
+either C, Java or Python to write your client. You should read through 
+the server code thoroughly, as it will help you with the development of 
+your client program.
+ </p>
+ <p>
+  <b>
+   Packet Loss &amp; Delay
+  </b>
+ </p>
+ <p style="text-align: justify;">
+  UDP provides applications with an unreliable transport service, 
+because messages may get lost in the network due to router queue 
+overflows or other reasons. In contrast, TCP provides applications with a
+ reliable transport service and takes care of any lost packets by 
+retransmitting them until they are successfully received. Applications 
+using UDP for communication must therefore implement any reliability 
+they need separately in the application level (each application can 
+implement a different policy, according to its specific needs). Because 
+packet loss is rare or even non-existent in typical campus networks, the
+ server in this lab injects artificial loss to simulate the effects of 
+network packet loss. The server has a parameter LOSS_RATE that specifies
+ the percentage of packets that are lost (i.e. dropped). The server also
+ has another parameter AVERAGE_DELAY that is used to simulate the delay 
+incurred by packets in the Internet. You should set AVERAGE_DELAY to a 
+positive value when testing your client and server on the same machine, 
+or when machines are close by on the network. You can set AVERAGE_DELAY 
+to 0 to find out the true round-trip time between the client and server.
+ </p>
+ <p>
+  <b>
+   Compiling and Running Server
+  </b>
+  <b>
+  </b>
+  <b>
+  </b>
+ </p>
+ <p>
+  To compile the server, type the following at the command prompt:
+ </p>
+ <pre> $javac PingServer.java
+</pre>
+ <p>
+  To run the server, type the following:
+ </p>
+ <pre>$java PingServer port
+</pre>
+ <p>
+  where
+  <i>
+   port
+  </i>
+  is the port number the server listens on. Remember that you should 
+pick a port number greater than 1024, because only processes running 
+with root (administrator) privilege can bind to ports less than 1024. If
+ you get a message that the port is in use, try a different port number 
+as the one you chose may be in use.
+ </p>
+ <p>
+  <b>
+   Note:
+  </b>
+  if you get a class not found error when running the above command, 
+then you may need to tell Java to look in the current directory in order
+ to resolve class references. In this case, the commands will be as 
+follows:
+ </p>
+ <pre>$java -classpath . PingServer port
+</pre>
+ <h4>
+  Your Task: Implementing Ping Client
+ </h4>
+ <p style="text-align: justify;">
+  You should write the client (called
+  <del>
+   PingServer.c
+  </del>
+  PingClient.java or PingClient.c or PingClient.py)  such that it sends 
+10 ping requests to the server, separated by approximately one second. 
+Each message contains a payload of data that includes the keyword PING, a
+ sequence number, and a timestamp. After sending each packet, the client
+ waits up to one second to receive a reply. If one second goes by 
+without a reply from the server, then the client assumes that its packet
+ or the server's reply packet has been lost in the network.
+ </p>
+ <p style="text-align: justify;">
+  You should write the client so that it executes with the following command:
+ </p>
+ <pre>$java PingClient host port (for Java)
+</pre>
+ <p style="text-align: justify;">
+  or
+ </p>
+ <pre>$PingClient host port  (for C)</pre>
+ <p style="text-align: justify;">
+  or
+ </p>
+ <pre>$python PingClient.py host port (for Python)</pre>
+ <p style="text-align: justify;">
+  where
+  <i>
+   host
+  </i>
+  is the IP address of the computer the server is running on and
+  <i>
+   port
+  </i>
+  is the port number it is listening to. In your lab you will be running
+ the client and server on the same machine. So just use 127.0.0.1 (i.e.,
+ localhost) for
+  <i>
+   host
+  </i>
+  when running your client. In practice, you can run the client and server on different machines.
+  <br>
+ </p>
+ <p style="text-align: justify;">
+  The client should send 10 pings to the server. Because UDP is an 
+unreliable protocol, some of the packets sent to the server may be lost,
+ or some of the packets sent from server to client may be lost. For this
+ reason, the client cannot wait indefinitely for a reply to a ping 
+message. You should have the client wait up to one second for a reply; 
+if no reply is received, then the client should assume that the packet 
+was lost during transmission across the network. It is important that 
+you choose a reasonably large value, which is greater than the expected 
+RTT (Note that the server artificially delays the response using the 
+AVERAGE_DELAY parameter). In order to achieve this your socket will need
+ to be non-blocking (i.e. it must not just wait indefinitely for a 
+response from the server). If you are using Java, you will need to 
+research the API for DatagramSocket to find out how to set the timeout 
+value on a datagram socket (Check:
+  <a href="http://java.sun.com/javase/6/docs/api/java/net/Socket.html">
+   http://java.sun.com/javase/6/docs/api/java/net/Socket.html
+  </a>
+  ). If you are using C, you can find information here:
+  <a href="http://www.beej.us/guide/bgnet/output/html/singlepage/bgnet.html#datagram">
+   http://www.beej.us/guide/bgnet/output/html/singlepage/bgnet.html#datagram
+  </a>
+  . Note that, the
+  <i>
+   fcntl()
+  </i>
+  function is the simplest way to achieve this.
+  <br>
+ </p>
+ <p>
+  Note that, your client should not send all 10 ping messages 
+back-to-back, but rather sequentially. The client should send one ping 
+and then wait either for the reply from the server or a timeout before 
+transmitting the next ping. Upon receiving a reply from the server, your
+ client should compute the RTT, i.e. the difference between when the 
+packet was sent and the reply was received. There are functions in Java 
+Python and C that will allow you to read the system time in 
+milliseconds. The RTT value should be printed to the standard output 
+(similar to the output printed by ping; have a look at the output of 
+ping for yourself). An example output could be:
+ </p>
+ <pre>ping to 127.0.0.1, seq = 1, rtt = 120 ms
+</pre>
+ <p>
+  We prefer that you show the timeout requests in the out put. Only 
+replace the 'rtt=120ms' in the above example with 'time out'. You will 
+also need to report the minimum, maximum and the average RTTs of all 
+packets received successfully at the end of your program's output.
+ </p>
+ <p>
+  <b>
+   Message Format
+  </b>
+  <b>
+  </b>
+ </p>
+ <p>
+  The ping messages in this lab are formatted in a simple way. Each 
+message contains a sequence of characters terminated by a carriage 
+return (CR) character (\r) and a line feed (LF) character (\n). The 
+message contains the following string:
+ </p>
+ <p>
+  <i>
+   PING  sequence_number  time  CRLF
+  </i>
+ </p>
+ <p>
+  where
+  <i>
+   sequence_number
+  </i>
+  starts at 0 and progresses to 9 for each successive ping message sent by the client,
+  <i>
+   time
+  </i>
+  is the time when the client sent the message, and CRLF represent the 
+carriage return and line feed characters that terminate the line.
+ </p>
+ <p>
+  <i>
+   Hint: Cut and paste PingServer, rename the code PingClient, and then modify the code, if you are using Java.
+  </i>
+ </p>
+ <p>
+  <span style="font-size: 24px;">
+   <b>
+    Optional Extensions (FOR STUDENTS KEEN TO TAKE UP A CHALLENGE. THESE ARE NOT MARKED)
+   </b>
+   <b>
+   </b>
+  </span>
+ </p>
+ <p style="text-align: justify;">
+  When you are finished writing the client, you may wish to try one of the following exercises:
+ </p>
+ <p style="text-align: justify;">
+  1) The basic program sends a new ping immediately when it receives a 
+reply. Modify the program so that it sends exactly 1 ping per second, 
+similar to how the standard ping program works. Hint: Use the
+  <i>
+   Timer
+  </i>
+  and
+  <i>
+   TimerTask
+  </i>
+  classes in
+  <i>
+   java.util
+  </i>
+  . (difficult)
+  <br>
+ </p>
+ <p style="text-align: justify;">
+  2) Develop two new classes
+  <i>
+   ReliableUdpSender
+  </i>
+  <i>
+   and ReliableUdpReceiver
+  </i>
+  , which are used to send and receive data reliably over UDP. To do 
+this, you will need to devise a protocol (such as TCP) in which the 
+recipient of data sends acknowledgements back to the sender to indicate 
+that the data has arrived. You can simplify the problem by only 
+providing one-way transport of application data from sender to 
+recipient. Because your experiments may be in a network environment with
+ little or no loss of IP packets, you should simulate packet loss. 
+(difficult but would be useful for your assignment)
+ </p>
+            <div class="clearfix">
+              <p class="pull-left"><small>Resource created <abbr class="timeago" title="Monday 16 July 2018, 02:50:39 PM">19 days ago</abbr>, last modified <abbr class="timeago" title="Saturday 04 August 2018, 08:53:59 PM">34 minutes ago</abbr>.</small></p>
+            </div>
+
+
+    <div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title">
+      Comments
+      <div role="group" class="btn-group btn-group-xs pull-right comment-frame-header"><a title="Click to Subscribe" class="btn btn-default btn-xs"><i class="fa fa-bookmark-o"></i></a> <a title="Search" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/search?forum_choice=resource/17341" class="btn btn-default btn-xs"><i class="fa fa-search"></i></a> <a title="Forum View" href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/forums/resource/17341" class="btn btn-default btn-xs"><i class="fa fa-comments"></i></a></div></h3></div> <div class="panel-body"><!----> <div style="position: relative;"><i class="fa fa-fw fa-comment-o" style="position: absolute; padding: 10px; color: rgb(153, 153, 153);"></i> <input placeholder="Add a comment" class="form-control" style="padding-left: 30px;" type="text"></div> <!----> <hr> <ul class="comment-wrapper"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:22:04 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  For the Exercise 2:
+ </p>
+ <p>
+  <strong>
+   Step 1:
+  </strong>
+  Start Wireshark by typing
+  <em>
+   wireshark
+  </em>
+  at the command prompt.&lt;o:p&gt;&lt;/o:p&gt;
+ </p>
+ <p>
+  How do I do this step 1 ?
+ </p>
+ <p>
+  <span>
+  </span>
+ </p>
+ <p>
+  <img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Screen_Shot_2018-08-04_at_4.png">
+ </p>
+ <br>
+</div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5164867">Riley Sutton</a><small><span><abbr title="Sat Aug 04 2018 16:55:50 GMT+1000 (AEST)">about 5 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  You have it open on the screen so you can go to step 2 now :).
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 17:13:37 GMT+1000 (AEST)">about 4 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Thank you.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 03:58:41 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  I don't understand anything above. I am an absolutely beginner for the
+ neworking. what is the Telnet and xterm how to I get start?
+ </p>
+ <p>
+  Is there any tutorial video about how to do this?  Did we learn this in Lecture?
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Aug 04 2018 20:14:14 GMT+1000 (AEST)">about an hour ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  If you have difficulty in understanding the concepts, attend your lab 
+and the tutor will help you. You can ask all these questions from them. 
+Plus, a simple google search will show you what is Telnet. I believe 
+"xterm" is not a networking concept!!
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5164867">Riley Sutton</a><small><span><abbr title="Sat Aug 04 2018 16:59:52 GMT+1000 (AEST)">about 4 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  There are a lot of resources available online as well as a lot given in lab1 regarding basic Linux commands.
+  <a href="https://webcms3.cse.unsw.edu.au/COMP3331/18s2/resources/17358">
+   https://webcms3.cse.unsw.edu.au/COMP3331/18s2/reso...
+  </a>
+  should help with a lot of the questions you are asking. Make sure you 
+read through all the lab specs posted on webcms before you spam the 
+comments and blame the course as I believe there is enough information 
+here to help any beginner (like myself).
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 17:15:41 GMT+1000 (AEST)">about 4 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Can you teach me how to do this face to face?
+  <br>
+  I would like to pay 100$ p/h for you.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5075490">Abanob Tawfik</a><small><span><abbr title="Fri Aug 03 2018 16:36:41 GMT+1000 (AEST)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  when it says exercise 5 is to be included in the report, do we just 
+have to include the code we wrote for ping client in the tar, or do we 
+have to write a summary in the actual pdf report aswell?
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar_lecturer.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z1058484">Nadeem Ahmed</a><small><span><abbr title="Fri Aug 03 2018 17:41:04 GMT+1000 (AEST)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Just the PingClient code would suffice.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:32:23 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  what is PingClient code?
+ </p>
+ <p>
+  <br>
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5169247">Jingqi Wang</a><small><span><abbr title="Thu Aug 02 2018 21:27:36 GMT+1000 (AEST)">2 days ago</abbr>, last modified <abbr title="Thu Aug 02 2018 21:28:29 GMT+1000 (AEST)">2 days ago</abbr></span></small></header> <div class="comment-body"> <p>
+  I am try to implementing exercise 5 and after running my client it shows the following result
+ </p>
+ <p>
+  I know the output from client side should be something like
+  <em>
+   <strong>
+    'ping to 127.0.0.1 ......'
+   </strong>
+  </em>
+  , but for my program it will result as
+  <strong>
+   <em>
+    ping to /127.0.0.1
+   </em>
+  </strong>
+  <em>
+  </em>
+  or
+  <strong>
+   <em>
+    ping to localhost/127.0.0.1
+   </em>
+  </strong>
+  <em>
+   .
+  </em>
+  I know I can use substring method to deal with this situation but I 
+think this is not the way we were supposed to, and can anyone help 
+teaching me a way handle this situation?
+  <br>
+  I am using
+ </p>
+ <p>
+  <em>
+   <strong>
+    InetAddress request_ip;
+    <br>
+    request_ip = InetAddress.getByName(args[0]);
+   </strong>
+  </em>
+ </p>
+ <p>
+  for the ip address of the server
+ </p>
+ <p>
+  And I also want to know if other part of my output satisfied the 
+exercise requirements, can we have some sample output to make sure we 
+are on the right track and not misunderstanding anything?
+ </p>
+ <p>
+  Thanks a lot
+ </p>
+ <p>
+  <br>
+ </p>
+ <p>
+  <img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Screenshot_-_020818_-_211835.png">
+ </p>
+ <p>
+  <br>
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Fri Aug 03 2018 10:20:11 GMT+1000 (AEST)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  In terms of having sample answer, I believe this is a straightforward 
+program as it is simply a ping. Important points are that you need to 
+make sure that packet lost and delay work properly.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5149599">Kai Luo</a><small><span><abbr title="Thu Aug 02 2018 22:00:54 GMT+1000 (AEST)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Normally, InetAddress contains the IP address and computer name. If 
+you exactly want to print the IP address. I suggest you firstly get the 
+InetAddress instance via "java.net.InetAddress.getByName(String host)" 
+and then get the exactly IP address via 
+"java.net.InetAddress.getHostAddress()" this function will return a 
+String that is your IP address.
+ </p>
+ <p>
+  for example:
+ </p>
+ <p>
+  String  myIPAddress = InetAddress.getByName(args[0]).getHostAddress();
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:33:56 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> get the InetAddress instance via "java.net.InetAddress.getByName(String host)"
+ <p>
+  How ?
+ </p>
+ <p>
+  <br>
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/happydayz.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5168147">Keiran Sampson</a><small><span><abbr title="Thu Aug 02 2018 20:40:38 GMT+1000 (AEST)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  In regards to Exercise 2 and Internet Cookies.
+  <br>
+  From what I can see, it should be that cookies are contained in the header as such:
+  <br>
+ </p>
+ <pre><code>Set-Cookie: &lt;cookie-name&gt;=&lt;cookie-value&gt;</code>
+</pre>
+ <p>
+  But no sites I try (that yes do have cookies) seem to show the cookies in the header?
+  <br>
+ </p>
+ <pre>HEAD / HTTP/1.1
+host: www.google.com.au
+HTTP/1.1 200 OK
+Date: Thu, 02 Aug 2018 10:12:44 GMT
+Server: Apache/2.2.11 (Ubuntu) PHP/5.3.2-1ubuntu4.29 with Suhosin-Patch
+Last-Modified: Tue, 19 Jun 2018 19:45:58 GMT
+ETag: "290538-1b5e-56f03ee59c980"
+Accept-Ranges: bytes
+Content-Length: 7006
+Content-Type: text/html
+</pre></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5184128">Daniel Hocking</a><small><span><abbr title="Thu Aug 02 2018 21:02:15 GMT+1000 (AEST)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  You sure that's the response from google.com.au? Don't think Google 
+still stuck on PHP 5.3, so I think that may be vision.ucla.edu.
+ </p>
+ <p>
+  But about your question, the cookies may not be set by the initial 
+response provided by the server (although in the case of Google I think 
+they were), when I visited the ucla site with my ad block extension 
+enabled I got no cookies, but if I disabled it I found that 5 cookies 
+were set.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/happydayz.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5168147">Keiran Sampson</a><small><span><abbr title="Fri Aug 03 2018 11:57:59 GMT+1000 (AEST)">a day ago</abbr>, last modified <abbr title="Fri Aug 03 2018 12:06:58 GMT+1000 (AEST)">a day ago</abbr></span></small></header> <div class="comment-body"> <p>
+  oh i totally misunderstood what the exercise meant.
+  <br>
+  I didnt know it wanted us to telnet to google.com.au and do the request there... I was still telneted into ucla
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5075490">Abanob Tawfik</a><small><span><abbr title="Thu Aug 02 2018 20:14:09 GMT+1000 (AEST)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  lab 2 exercise 5 states "You should write the client (called 
+PingServer.c or PingClient.c or PingClient.py)" are we allowed to do 
+this in Java or are we constrainted to C or Python? can we make 
+PingClient.java?
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar_lecturer.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z1058484">Nadeem Ahmed</a><small><span><abbr title="Thu Aug 02 2018 21:16:21 GMT+1000 (AEST)">2 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  You can use Java. Typo has been fixed in the lab specifications.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/581523_104019443124948_1831912075_n.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5059751">Peter Arnott</a><small><span><abbr title="Tue Jul 31 2018 21:15:10 GMT+1000 (AEST)">4 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Hello,
+ </p>
+ <p>
+  I have just been reading the Lab 2 spec and it says under 
+prerequisites that we should have seen the week 2 and week 3 lectures 
+before we attempt the lab.
+ </p>
+ <p>
+  Since I am in a Monday Lab, how will I be able to cover the week 3 lecture content before the lab period?
+ </p>
+ <p>
+  This was also an issue with the week 1 lab, as the content we covered 
+in lectures today (Tuesday 31st) was basically the content the week 1 
+lab was based on.
+ </p>
+ <p>
+  Thanks for your help
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:38:19 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  I already watched the Lecture Video. This course Lecture teaching you 
+nothing about how to deal with your Lab. And assume you already know 
+everything I guess.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Aug 04 2018 20:11:03 GMT+1000 (AEST)">about an hour ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  The course gives you the basic concepts and you practise them in labs.
+ The labs are supervised by tutors so if you have any difficulty in 
+understanding the concept, you are more than welcome to attend the lab 
+and ask your tutor to clarify.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Fri Aug 03 2018 10:13:06 GMT+1000 (AEST)">a day ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Hi, we will change the deadline to Friday mid-night from lab2.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/earthshaker_vert.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5192989">Semisi Taufa</a><small><span><abbr title="Wed Aug 01 2018 11:23:09 GMT+1000 (AEST)">3 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Postgrads I guess are meant to do some research but I feel like it's unfair for the Undergrads
+  <br>
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:39:15 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  I myself doing 9331 postgrads. I feel it is unfair for Postgrads as well. Good Luck.
+ </p>
+ <p>
+  <br>
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5114185">Mohamed Al Mouiee</a><small><span><abbr title="Tue Jul 31 2018 21:26:26 GMT+1000 (AEST)">4 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  I second this question too
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5102632">Sreepallavi Bhulokam</a><small><span><abbr title="Wed Aug 01 2018 06:38:02 GMT+1000 (AEST)">4 days ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Same here. Lab1 was a bit of a struggle as the concepts has to be discovered myself.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/WechatIMG271.jpeg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z3454684">Wenxin Wang</a><small><span><abbr title="Sat Aug 04 2018 04:41:38 GMT+1000 (AEST)">about 17 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  I disagree with you . I think you have to discovered EVERYTHING by yourself not only the concepts.
+ </p>
+ <p>
+  And for sure you will receive a 0 mark if you failed to do that.
+ </p>
+ <p>
+  Good Luck.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment dark"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/default_avatar.png" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5102632">Sreepallavi Bhulokam</a><small><span><abbr title="Sat Aug 04 2018 11:27:49 GMT+1000 (AEST)">about 10 hours ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  Thank you for your opinion. I thought the courses are to enable us to 
+help research. If everything have to be learned by research then no one 
+would enroll in the courses. I am sure lectures are helpful for me to do
+ research in right direction.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"><li class="comment light"><!----> <div class="profile-mask"><img src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/Ali_Dorri.jpg" class="comment-profile"></div> <div class="comment-content"><header><a href="https://webcms3.cse.unsw.edu.au/users/z5095883">Ali Dorri</a><small><span><abbr title="Sat Aug 04 2018 20:08:43 GMT+1000 (AEST)">about an hour ago</abbr><!----></span></small></header> <div class="comment-body"> <p>
+  For sure we are here to help. As I mentioned, due to this concern that
+ you and some of other students had, we changed the labs submission 
+deadline to the Friday mid-night at the week you have your lab. Thus, 
+you can go through the lab, and lectures will be covered and you have 
+sufficient time to answer questions.
+ </p>
+ <p>
+  Hope it helps.
+ </p></div> <footer><a href="#">Reply</a><!----><!----></footer></div> <!----> <!----> <ul class="replies"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul> <!----> <!----> <!----></div></div>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="row hidden-print">
+        <div class="col-sm-12">
+          <hr>
+          <p class="pull-right"><a href="#webcms3top">Back to top <i class="fa fa-caret-up"></i></a></p>
+          <div class="pull-left">
+
+          <strong>COMP3331/COMP9331 18s2 (Computer Networks and Applications)</strong>
+          is powered by <a href="https://webcms3.cse.unsw.edu.au/about">WebCMS3</a>
+          <h6><small>CRICOS Provider No. 00098G</small></h6>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/manifest.js"></script>
+    <script src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/vendor.js"></script>
+    <script src="Lab%20Exercise%202%20%20HTTP%20&amp;%20Socket%20Programming%20|%20COMP3331%2018s2%20|%20WebCMS3_files/app.js"></script>
+
+
+
+<script>
+
+webcms.renderComments("#messaging-wrapper", {
+    object_type: 'resource',
+    object_id: 17341,
+    url: '/messages/',
+    course: '3147',
+});
+
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete-heading"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+      bootbox.dialog({
+        message: "Are you sure you wish to delete this resource heading?",
+        buttons: {
+          main: {
+            label: "No",
+            className: "btn-default",
+            callback: function() { }
+          },
+          children: {
+            label: "Yes, and delete all children too",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location + "?children=1");
+            }
+          },
+          just: {
+            label: "Yes, and move children to parent",
+            className: "btn-primary",
+            callback: function() {
+              window.location.replace(location);
+            }
+          }
+        }
+      });
+    });
+  });
+
+});
+</script>
+
+<script>
+$(function() {
+  $('*[data-bootbox="resource-delete"]').each(function() {
+    $(this).click(function(e) {
+      e.preventDefault();
+      var location = $(this).attr('href');
+
+      bootbox.confirm("Are you sure you wish to delete this resource?", function(confirmed) {
+        if (confirmed) {
+          window.location.replace(location);
+        }
+      });
+    });
+  });
+});
+</script>
+
+
+
+    <script>
+      jQuery.timeago.settings.allowFuture = true;
+
+      $(function() {
+        $('*[id^="redactor"]').each(function () {
+          $(this).redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+
+        });
+          $('.redactor').redactor({
+            imageUpload: "/files/redactor/upload",
+            plugins: ['table', 'fontsize', 'fontcolor', 'video', 'template']
+          });
+      });
+
+      $(document).ready(function() {
+        $('[data-toggle=buttons]').click(function() {
+          // Hack to get toolbar to show
+          setTimeout(function() {$('.redactor').scroll()}, 0)
+        });
+      });
+
+    </script>
+    <script>
+        $(document).on('change', '.btn-file :file', function() {
+          var input = $(this),
+              numFiles = input.get(0).files ? input.get(0).files.length : 1,
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+          input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $(document).ready( function() {
+            $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+            });
+        });
+
+      $('[data-toggle="popover"]').popover();
+    </script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+      });
+
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $(document).ready(function() {
+        $('[data-toggle=offcanvas]').click(function() {
+          $('.row-offcanvas').toggleClass('active');
+        });
+      });
+    </script>
+
+
+
+
+  
+</div></body></html>
